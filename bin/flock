@@ -8,6 +8,7 @@ const { cli } = require('../lib/flock')
 // flock command [lastId] [arguments]
 
 // Commands:
+// create {filename}
 // migrate
 // rollback
 // latest
@@ -42,6 +43,8 @@ if (args.find(x => x === '--help')) {
 // Handle the 'create' command
 if (args[0] === 'create') {
   const fileName = args[1]
+
+  // NOTE: We'll need to support creating migrartions for specific plugins perhaps?
 
   if (fileName) {
     const r = fs.createReadStream(path.resolve(__dirname, '../templates/migration.js'))
