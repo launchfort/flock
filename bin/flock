@@ -33,11 +33,13 @@ Arguments:
 
 const args = process.argv.slice(2)
 
+// If --help is present then just print the help message and exit.
 if (args.find(x => x === '--help')) {
   console.log(HELP)
   process.exit(0)
 }
 
+// Handle the 'create' command
 if (args[0] === 'create') {
   const fileName = args[1]
 
@@ -51,20 +53,27 @@ if (args[0] === 'create') {
   } else {
     throw new Error('Create command requires a migration file name.')
   }
+// Handle all other commands (i.e. pass them to flock)
 } else {
+  // Handle the --options argument
   const optionsModuleId = args.find(x => x === '--options')
     ? args[args.indexOf('--options') + 1]
     : false
-  // NOTE: We could support '--plugin mssql' on the command line so mssql could be
-  // supported in the future. For now just hardcode to 'pg'.
-  const pluginName = 'pg'
-  const pluginModuleId = pluginName.startsWith('.')
-    ? pluginName
-    : `../lib/${pluginName}/plugin`
-  const { plugin } = require(pluginModuleId) || {}
+  // Load the options file as a Node module
   const options = optionsModuleId
     ? require(optionsModuleId)
     : {}
+  // NOTE: To support other plugins (i.e. DB drivers) we will need to handle the
+  // argument --plugin {name}.
+  const pluginName = 'pg'
+  // NOTE: Will likely have to support a top-level and relative module IDs and
+  // be able to handle loading plugins provided by this module and external
+  // plugins.
+  const pluginModuleId = pluginName.startsWith('.')
+    ? pluginName
+    : `../lib/${pluginName}/plugin`
+  // Load the plugin as a Node module
+  const { plugin } = require(pluginModuleId) || null
 
   if (typeof plugin !== 'function') {
     throw new Error(`Plugin ${pluginModuleId} does not export a "plugin" funciton.`)
