@@ -1,6 +1,6 @@
 {
   "name": "flock",
-  "version": "0.0.21",
+  "version": "0.1.0",
   "description": "Flock is a database agnostic migration library.",
   "main": "index.js",
   "bin": {
