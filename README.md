@@ -138,6 +138,21 @@ the current user has access to and has been created in the current schema.
 
 *NOTE: The current/default schema can be changed with `SET search_path = new_schema`.*
 
+**Connecting**
+
+To set the connection details for the database use the following environment
+variables.
+
+```
+PGUSER
+PGPASSWORD
+PGHOST
+PGPORT
+PGDATABASE
+```
+
+See: https://node-postgres.com/features/connecting
+
 **Options**
 
 The following options are suppored in an options file.
