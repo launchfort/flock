@@ -13,6 +13,12 @@ A migration is a Node module that exports the following functions.
 }
 ```
 
+## Install
+
+```
+npm install gradealabs/flock -D
+```
+
 ## Command line usage
 
 ```
@@ -134,3 +140,6 @@ the current user has access to and has been created in the current schema.
 To test the plugins first run `docker-compose up` from the module directory.
 Then run `npm test`.
 
+## API
+
+*TODO*
