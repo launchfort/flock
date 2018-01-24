@@ -35,6 +35,9 @@ Arguments:
 --help
 ```
 
+*NOTE: The supported options in the options file will be determined by the
+plugin that is used (currently hardcoded to the `pg` plugin).*
+
 ### create
 
 The `create` command will create a new migration file in the specified location.
@@ -62,7 +65,7 @@ last to be migrated.
 
 Example:
 ```
-flock migrate some-mygration
+flock migrate some-migration
 ```
 
 In this example all migrations before and including `some-migration` will be
@@ -86,7 +89,7 @@ last to be rolled back.
 
 Example:
 ```
-flock rollback some-mygration
+flock rollback some-migration
 ```
 
 In this example all migrations after and including `some-migration` will be
@@ -134,6 +137,19 @@ Any method that accepts `tableName` as an argument will only search tables that
 the current user has access to and has been created in the current schema.
 
 *NOTE: The current/default schema can be changed with `SET search_path = new_schema`.*
+
+**Options**
+
+The following options are suppored in an options file.
+
+```
+{
+  // The directory where migration modules are located (default: ./migrations)
+  directory: string,
+  // The table name of the migrations table (default: migrations)
+  tableName: string
+}
+```
 
 ## Testing
 
