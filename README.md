@@ -81,7 +81,7 @@ they are migrated.*
 
 Example:
 ```
-flock rollback
+flock rollback // rollback the last ran migration
 ```
 
 Optionally a migration ID can be specified indicating what migration should be
@@ -90,10 +90,13 @@ last to be rolled back.
 Example:
 ```
 flock rollback some-migration
+flock rollback @all // rollback all migrations
 ```
 
 In this example all migrations after and including `some-migration` will be
 rolled back. Migrations occurring before `some-migration` will not be rolled back.
+
+If the migration ID is `@all` then all migtations will be rolled back.
 
 ### latest
 
