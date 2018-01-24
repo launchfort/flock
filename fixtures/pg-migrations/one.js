@@ -6,6 +6,7 @@ exports.up = function (context) {
   created_at timestamp DEFAULT current_timestamp,
   PRIMARY KEY (id)
 )`
+  console.log('migrating one')
   return client.query(query)
 }
 
