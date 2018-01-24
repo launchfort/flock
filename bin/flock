@@ -1,0 +1,80 @@
+#!/usr/bin/env node
+
+const fs = require('fs')
+const path = require('path')
+const { cli } = require('../lib/flock')
+
+// CLI:
+// flock command [lastId] [arguments]
+
+// Commands:
+// migrate
+// rollback
+// latest
+
+// CLI Arguments:
+// (optional) --options file.js[on]
+
+// Supported options are determined by the loaded plugin.
+
+const HELP =
+`flock {command} [lastId] [arguments]
+
+Commands:
+create {migrations/filename.js}
+migrate [lastId]
+rollback [lastId]
+latest
+
+Arguments:
+--options file.json
+--help
+`
+
+const args = process.argv.slice(2)
+
+if (args.find(x => x === '--help')) {
+  console.log(HELP)
+  process.exit(0)
+}
+
+if (args[0] === 'create') {
+  const fileName = args[1]
+
+  if (fileName) {
+    const r = fs.createReadStream(path.resolve(__dirname, '../templates/migration.js'))
+    const w = fs.createWriteStream(fileName)
+    r.pipe(w)
+    r.on('end', () => {
+      process.exit(0)
+    })
+  } else {
+    throw new Error('Create command requires a migration file name.')
+  }
+} else {
+  const optionsModuleId = args.find(x => x === '--options')
+    ? args[args.indexOf('--options') + 1]
+    : false
+  // NOTE: We could support '--plugin mssql' on the command line so mssql could be
+  // supported in the future. For now just hardcode to 'pg'.
+  const pluginName = 'pg'
+  const pluginModuleId = pluginName.startsWith('.')
+    ? pluginName
+    : `../lib/${pluginName}/plugin`
+  const { plugin } = require(pluginModuleId) || {}
+  const options = optionsModuleId
+    ? require(optionsModuleId)
+    : {}
+
+  if (typeof plugin !== 'function') {
+    throw new Error(`Plugin ${pluginModuleId} does not export a "plugin" funciton.`)
+  }
+
+  new Promise(resolve => {
+    resolve(plugin(options))
+  }).then(({ migrator, context }) => {
+    return cli(migrator, context, args)
+  }).catch(error => {
+    console.error(error)
+  })
+}

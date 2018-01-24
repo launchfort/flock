@@ -1,0 +1,30 @@
+{
+  "name": "flock",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "flock": "bin/flock"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "mocha lib/**/*.test.js"
+  },
+  "keywords": [],
+  "author": "Darren Schnare <schnare.d@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^5.0.0"
+  },
+  "dependencies": {
+    "pg": "7.4.1"
+  }
+}
