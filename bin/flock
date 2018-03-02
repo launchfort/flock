@@ -28,6 +28,7 @@ rollback [lastId]
 latest
 
 Arguments:
+--new-table
 --options file.json
 --help
 `
@@ -62,7 +63,7 @@ if (args[0] === 'create') {
 
       if (fileName) {
         const r = fs.createReadStream(path.resolve(__dirname, '../templates/migration.js'))
-        const w = fs.createWriteStream(fileName)
+        const w = fs.createWriteStream(path.resolve(__dirname, `../migrations/${fileName}`))
         r.pipe(w)
         r.on('end', () => {
           process.exit(0)
