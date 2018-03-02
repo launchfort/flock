@@ -1,4 +1,4 @@
-console.warn('fdsdfsdf')/*
+/*
 SQL Snippets:
 
 See: https://www.postgresql.org/docs/10/static/sql-createtable.html
