@@ -28,6 +28,7 @@ rollback [lastId]
 latest
 
 Arguments:
+--new-table
 --options file.json
 --help
 `
@@ -44,18 +45,30 @@ if (args.find(x => x === '--help')) {
 if (args[0] === 'create') {
   const fileName = args[1]
 
-  // NOTE: We'll need to support creating migrartions for specific plugins perhaps?
-
-  if (fileName) {
-    const r = fs.createReadStream(path.resolve(__dirname, '../templates/migration.js'))
-    const w = fs.createWriteStream(fileName)
-    r.pipe(w)
-    r.on('end', () => {
-      process.exit(0)
-    })
+  // migration which creates a new table
+  if (args.find(x => x === '--new-table')) {
+    if (fileName) {
+      const r = fs.createReadStream(path.resolve(__dirname, '../templates/create-table.js'))
+      const w = fs.createWriteStream(path.resolve(__dirname, `../migrations/${fileName}`))
+      r.pipe(w)
+      r.on('end', () => {
+        process.exit(0)
+      })
+    }
   } else {
-    throw new Error('Create command requires a migration file name.')
+    // NOTE: We'll need to support creating migrartions for specific plugins perhaps?
+    if (fileName) {
+      const r = fs.createReadStream(path.resolve(__dirname, '../templates/migration.js'))
+      const w = fs.createWriteStream(path.resolve(__dirname, `../migrations/${fileName}`))
+      r.pipe(w)
+      r.on('end', () => {
+        process.exit(0)
+      })
+    } else {
+      throw new Error('Create command requires a migration file name.')
+    }
   }
+ 
 // Handle all other commands (i.e. pass them to flock)
 } else {
   // Handle the --options argument
