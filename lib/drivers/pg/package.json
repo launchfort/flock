@@ -1,0 +1,7 @@
+{
+  "name": "flock-pg",
+  "description": "Flock database driver for Postgres",
+  "keywords": [
+    "flock-driver"
+  ]
+}
