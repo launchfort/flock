@@ -10,7 +10,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "mocha -r dotenv/config lib/**/*.test.js lib/**/**/**/*.test.js"
+    "test": "mocha -r dotenv/config lib/**/*.test.js lib/**/**/**/*.test.js",
+    "test:": "mocha -r dotenv/config"
   },
   "keywords": [],
   "author": "Darren Schnare <schnare.d@gmail.com>",
