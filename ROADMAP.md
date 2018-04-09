@@ -10,7 +10,3 @@
 
 - Add unit tests for the Yeoman CLI in addition to unit tests for the API model
   See: http://yeoman.io/authoring/testing.html
-
-## Version 1.0.0
-
-- Refactor CLI to use Commander and Yeoman

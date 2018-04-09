@@ -69,8 +69,8 @@ Run all migrations, or up to a specific migration
 
 Options:
 
-  --require   Module ID of a module to require before migrating
-  --list      Display list of migrations to pick from
+  -r, --require   Module ID of a module to require before migrating
+  -l, --list      Display list of migrations to pick from
   -h, --help  output usage information
 ```
 
@@ -102,8 +102,8 @@ Rollback the last ran migration, all migrations, or down to a specific migration
 
 Options:
 
-  --require   Module ID of a module to require before rolling back
-  --list      Display list of migrations to pick from
+  -r, --require   Module ID of a module to require before rolling back
+  -l, --list      Display list of migrations to pick from
   -h, --help  output usage information
 ```
 
