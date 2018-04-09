@@ -1,0 +1,13 @@
+
+git checkout -b features/signin master
+
+git checkout -b releases/v1.2.3 master
+
+git checkout -b hotfixes/v1.2.4 tags/v1.2.1
+git checkout -b hotfixes/v1.2.4 releases/v1.2.3
+
+# Get current production version
+git describe --no-abbrev develop
+
+# Get all pending releases
+git branch -r --list origin/releases/*
