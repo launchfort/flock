@@ -22,42 +22,55 @@ npm install gradealabs/flock -D
 ## Command line usage
 
 ```
-flock {command} [lastId] [arguments]
+Usage: flock [options] [command]
+
+Options:
+
+  -v, --version                     output the version number
+  -h, --help                        output usage information
 
 Commands:
-create {migrations/filename.js}
-migrate [lastId]
-rollback [lastId]
-latest
 
-Arguments:
---options file.json
---help
+  create [options]                  Create a database migration
+  migrate [options] [migrationId]   Run all migrations, or up to a specific migration
+  rollback [options] [migrationId]  Rollback the last ran migration, all migrations, or down to a specific migration
 ```
-
-*NOTE: The supported options in the options file will be determined by the
-plugin that is used (currently hardcoded to the `pg` plugin).*
 
 ### create
 
-The `create` command will create a new migration file in the specified location.
+The `create` command will create a new migration file in the designated migration directory.
+By default the migration file will be given an identifying name based on the migration
+type selected and the table being migrated. The name of the migration file will
+automatically be sequentially named for you. However, you may decide to rename
+the file.
 
-Example:
 ```
-flock create migrations/first-migration.js
+Usage: create [options]
+
+Create a database migration
+
+Options:
+
+  --require   Module ID of a module to require before writing module file
+  -h, --help  output usage information
 ```
 
 ### migrate
 
-The `migrate` command will migrate all migrations in the `./migrations` directory
-(or whatever directory specifed in the options file).
+The `migrate` command will migrate all migrations in the specified migration directory.
 
-*NOTE: Migrations will be sorted based on their basename without extension before
-they are migrated.*
+A migrationId is the basename of a migration file without it's `.js` extension.
 
-Example:
 ```
-flock migrate
+Usage: migrate [options] [migrationId]
+
+Run all migrations, or up to a specific migration
+
+Options:
+
+  --require   Module ID of a module to require before migrating
+  --list      Display list of migrations to pick from
+  -h, --help  output usage information
 ```
 
 Optionally a migration ID can be specified indicating what migration should be
@@ -73,15 +86,21 @@ migrated. Migrations occurring after `some-migration` will not be migrated.
 
 ### rollback
 
-The `rollback` command will rollback the last migrated migration from the `./migrations` directory
-(or whatever directory specifed in the options file).
+The `rollback` command will rollback the last migrated migration from the specified
+migration directory.
 
-*NOTE: Migrations will be sorted based on their basename without extension before
-they are migrated.*
+A migrationId is the basename of a migration file without it's `.js` extension.
 
-Example:
 ```
-flock rollback // rollback the last ran migration
+Usage: rollback rollback [migrationId | @all]
+
+Rollback the last ran migration, all migrations, or down to a specific migration
+
+Options:
+
+  --require   Module ID of a module to require before rolling back
+  --list      Display list of migrations to pick from
+  -h, --help  output usage information
 ```
 
 Optionally a migration ID can be specified indicating what migration should be
@@ -98,16 +117,9 @@ rolled back. Migrations occurring before `some-migration` will not be rolled bac
 
 If the migration ID is `@all` then all migtations will be rolled back.
 
-### latest
 
-The `latest` command retrieves the ID of the last migration to be migrated.
 
-Example:
-```
-flock latest
-```
-
-## Plugins
+## Drivers
 
 Flock can be extended to support other databases through the use of plugins. The
 following plugins are supported by default:

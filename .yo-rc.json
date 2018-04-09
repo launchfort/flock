@@ -2,7 +2,7 @@
   "flock": {
     "promptValues": {
       "driver": "/Users/darren/Workspace/gradealabs/labs/flock/lib/drivers/pg/index.js",
-      "migrationTable": "message",
+      "migrationTable": "migration",
       "migrationDir": "migrations"
     }
   }
