@@ -1,10 +1,8 @@
 # Flock
 
-Flock is a database agnostic migration library.
+Flock is a database agnostic migration library and command line tool.
 
-*NOTE: Currently only works with Postgres databases.*
-
-A migration is a Node module that exports the following functions.
+Where a migration is a Node module that exports the following functions.
 
 ```
 {
@@ -12,6 +10,10 @@ A migration is a Node module that exports the following functions.
   down (context): Promise<void>
 }
 ```
+
+The command line tool is built using Yeoman so there will be project settings
+written to a `.yo-rc.json` file after running any command. Be sure to check this
+into source control.
 
 ## Install
 
@@ -51,7 +53,6 @@ Create a database migration
 
 Options:
 
-  --require   Module ID of a module to require before writing module file
   -h, --help  output usage information
 ```
 
@@ -72,6 +73,9 @@ Options:
   --list      Display list of migrations to pick from
   -h, --help  output usage information
 ```
+
+When using the `--list` option, migration IDs are listed with `✓` to indicte they
+have been migrated and, a `✗` to indicate they have not been migrated.
 
 Optionally a migration ID can be specified indicating what migration should be
 last to be migrated.
@@ -103,6 +107,9 @@ Options:
   -h, --help  output usage information
 ```
 
+When using the `--list` option, migration IDs are listed with `✓` to indicte they
+have been migrated and, a `✗` to indicate they have not been migrated.
+
 Optionally a migration ID can be specified indicating what migration should be
 last to be rolled back.
 
@@ -117,27 +124,33 @@ rolled back. Migrations occurring before `some-migration` will not be rolled bac
 
 If the migration ID is `@all` then all migtations will be rolled back.
 
+## Testing
 
+To test the plugins first run `docker-compose up` from the module directory.
+Then run `npm test`.
+
+## API
+
+*Coming Soon*
 
 ## Drivers
 
 Flock can be extended to support other databases through the use of plugins. The
-following plugins are supported by default:
+following plugins are supported by default.
 
-- pg
+- flock-pg
 
-*NOTE: At this time the only plugin supported is pg and is hardcoded when calling
-the flock command line tool. In the future external plugins will be supported.*
+*NOTE: This driver may not always be installed by default in the future.*
 
-### pg
+### flock-pg
 
-The `pg` plugin adds support for connecting Postgres databases. Every migration
-will have the following context passed to its `up` and `down` functions.
+The `flock-pg` driver adds support for connecting to Postgres databases. Every
+migration will have the following context passed to its `up` and `down` functions.
 
 ```
 {
   // The name of the migrations table
-  tableName: string,
+  migrationTable: string,
   // The Client instance (pg module)
   client: pg.Client,
   tableExists(tableName: string): Promise<boolean>,
@@ -167,25 +180,3 @@ PGDATABASE
 ```
 
 See: https://node-postgres.com/features/connecting
-
-**Options**
-
-The following options are suppored in an options file.
-
-```
-{
-  // The directory where migration modules are located (default: ./migrations)
-  directory: string,
-  // The table name of the migrations table (default: migrations)
-  tableName: string
-}
-```
-
-## Testing
-
-To test the plugins first run `docker-compose up` from the module directory.
-Then run `npm test`.
-
-## API
-
-*TODO*
