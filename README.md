@@ -172,6 +172,12 @@ To set the connection details for the database use the following environment
 variables.
 
 ```
+DATABASE_URL
+```
+
+OR
+
+```
 PGUSER
 PGPASSWORD
 PGHOST
