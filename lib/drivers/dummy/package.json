@@ -1,0 +1,7 @@
+{
+  "name": "flock-dummy",
+  "description": "Flock database driver for testing",
+  "keywords": [
+    "flock-driver"
+  ]
+}

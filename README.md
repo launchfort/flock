@@ -36,6 +36,7 @@ Commands:
   create [options]                  Create a database migration
   migrate [options] [migrationId]   Run all migrations, or up to a specific migration
   rollback [options] [migrationId]  Rollback the last ran migration, all migrations, or down to a specific migration
+  upgrade [options]                 Upgrade a flock project using a .yo-rc.json file to use a .flockrc.json file
 ```
 
 ### create
@@ -53,7 +54,8 @@ Create a database migration
 
 Options:
 
-  -h, --help  output usage information
+  -c,--config  The config file to load (default .flockrc.json)
+  -h, --help   output usage information
 ```
 
 ### migrate
@@ -71,6 +73,7 @@ Options:
 
   -r, --require   Module ID of a module to require before migrating
   -l, --list      Display list of migrations to pick from
+  -c,--config               The config file to load (default .flockrc.json)
   -h, --help  output usage information
 ```
 
@@ -104,6 +107,7 @@ Options:
 
   -r, --require   Module ID of a module to require before rolling back
   -l, --list      Display list of migrations to pick from
+  -c,--config               The config file to load (default .flockrc.json)
   -h, --help  output usage information
 ```
 
@@ -123,6 +127,22 @@ In this example all migrations after and including `some-migration` will be
 rolled back. Migrations occurring before `some-migration` will not be rolled back.
 
 If the migration ID is `@all` then all migtations will be rolled back.
+
+### upgrade
+
+The `upgrade` command will take a project that is using flock 1.x up to the
+latest config file format for flock 2+.
+
+```
+Usage: upgrade [options]
+
+Upgrade a flock project using a .yo-rc.json file to use a .flockrc.json file
+
+Options:
+
+  -c,--config               The config file to write to (default .flockrc.json)
+  -h, --help                output usage information
+```
 
 ## Testing
 

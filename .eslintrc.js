@@ -1,7 +1,7 @@
 module.exports = {
     "extends": "standard",
     "env": {
-        "mocha": true,
-        "node": true
+        "node": true,
+        "mocha": true
     }
 };
