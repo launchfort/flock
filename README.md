@@ -11,9 +11,8 @@ Where a migration is a Node module that exports the following functions.
 }
 ```
 
-The command line tool is built using Yeoman so there will be project settings
-written to a `.yo-rc.json` file after running any command. Be sure to check this
-into source control.
+The command line tool is will write project settings to a `.flockrc.json` file
+after running any command. Be sure to check this into source control.
 
 ## Install
 
