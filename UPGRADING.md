@@ -9,7 +9,7 @@ was set by default in version 0.x.
 ```json
 {
   "flock": {
-    "prompValues": {
+    "promptValues": {
       "driver": "flock:lib/drivers/pg",
       "migrationDir": "migrations",
       "migrationTable": "migrations"
