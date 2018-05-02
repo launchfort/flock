@@ -11,7 +11,7 @@ Where a migration is a Node module that exports the following functions.
 }
 ```
 
-The command line tool is will write project settings to a `.flockrc.json` file
+The command line tool will write project settings to a `.flockrc.json` file
 after running any command. Be sure to check this into source control.
 
 ## Install
