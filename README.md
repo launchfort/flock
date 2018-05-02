@@ -53,8 +53,8 @@ Create a database migration
 
 Options:
 
-  -c,--config  The config file to load (default .flockrc.json)
-  -h, --help   output usage information
+  -c, --config  The config file to load (default .flockrc.json)
+  -h, --help    output usage information
 ```
 
 ### migrate
@@ -72,8 +72,8 @@ Options:
 
   -r, --require   Module ID of a module to require before migrating
   -l, --list      Display list of migrations to pick from
-  -c,--config               The config file to load (default .flockrc.json)
-  -h, --help  output usage information
+  -c, --config    The config file to load (default .flockrc.json)
+  -h, --help      output usage information
 ```
 
 When using the `--list` option, migration IDs are listed with `✓` to indicte they
@@ -106,8 +106,8 @@ Options:
 
   -r, --require   Module ID of a module to require before rolling back
   -l, --list      Display list of migrations to pick from
-  -c,--config               The config file to load (default .flockrc.json)
-  -h, --help  output usage information
+  -c, --config    The config file to load (default .flockrc.json)
+  -h, --help      output usage information
 ```
 
 When using the `--list` option, migration IDs are listed with `✓` to indicte they
@@ -139,7 +139,7 @@ Upgrade a flock project using a .yo-rc.json file to use a .flockrc.json file
 
 Options:
 
-  -c,--config               The config file to write to (default .flockrc.json)
+  -c, --config              The config file to write to (default .flockrc.json)
   -h, --help                output usage information
 ```
 
