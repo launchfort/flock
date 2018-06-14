@@ -1,6 +1,6 @@
 {
-  "name": "flock",
-  "version": "2.0.1",
+  "name": "@gradealabs/flock",
+  "version": "3.0.0",
   "description": "Flock is a database agnostic migration library.",
   "main": "lib/flock/index.js",
   "bin": {
