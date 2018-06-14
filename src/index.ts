@@ -1,5 +1,5 @@
 export { NodeModuleMigrationProvider } from './node-migration-provider'
-export { TemplateProvider } from './flock-cli'
+export { TemplateProvider } from 'flock-cli'
 
 export interface MigrationProvider {
   provide (): Promise<Migration[]>

@@ -1,6 +1,6 @@
 import * as Path from 'path'
 import { Client } from 'pg'
-import * as Flock from '../index'
+import * as Flock from 'flock'
 
 export class TemplateProvider implements Flock.TemplateProvider {
   readonly migrationTypes = [ 'create-table', 'alter-table', 'other' ]

@@ -1,6 +1,6 @@
 import * as Path from 'path'
 import { Command } from 'commander'
-import * as Flock from '../index'
+import * as Flock from 'flock'
 import * as Actions from './actions'
 import { TemplateProvider, DefaultTemplateProvider } from './template-provider'
 
