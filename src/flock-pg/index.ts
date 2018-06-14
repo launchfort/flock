@@ -177,6 +177,12 @@ export class PgQueryInterface implements Flock.QueryInterface {
     return result.rowCount === 1
   }
 
+  async columnDataType (tableName: string, columnName: string): Promise<string|null> {
+    return this.inspectColumn(tableName, columnName).then(col => {
+      return col ? col.data_type : null
+    })
+  }
+
   async inspectColumn (tableName: string, columnName: string) {
     // ANSI SQL compliant query. This should work for all RDMS.
     // NOTE: use schema_name() for MSSQL
@@ -190,11 +196,5 @@ export class PgQueryInterface implements Flock.QueryInterface {
       values: [ tableName, columnName ]
     })
     return result.rowCount === 1 ? result.rows[0] : null
-  }
-
-  async columnDataType (tableName: string, columnName: string): Promise<string|null> {
-    return this.inspectColumn(tableName, columnName).then(col => {
-      return col ? col.data_type : null
-    })
   }
 }
