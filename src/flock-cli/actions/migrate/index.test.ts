@@ -11,7 +11,8 @@ describe('flock-cli/actions/migrate', function () {
       migrator: mockMigrator
     })
 
+    Assert.strictEqual(mockMigrator.rollback['calls'].length, 0)
     Assert.strictEqual(mockMigrator.migrate['calls'].length, 1)
-    Assert.deepStrictEqual(mockMigrator.migrate['calls'][0].args, [ 'two' ])
+    Assert.deepStrictEqual(mockMigrator.migrate['calls'][0].args, [ 'one' ])
   })
 })
