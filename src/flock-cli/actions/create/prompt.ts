@@ -2,7 +2,7 @@ import { prompt as basePrompt } from '../prompt'
 import { generateMigrationBasename } from './generate-migration-basename'
 
 export interface Answers {
-  migrationType?: 'create-table'|'alter-table'|'other'
+  migrationType?: string
   tableName?: string
   migrationName?: string
 }

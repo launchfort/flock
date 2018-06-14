@@ -2,12 +2,6 @@ import { formatDate } from './format-date'
 import { zeroPad } from './zero-pad'
 import { getMigrationsCount } from './get-migrations-count'
 
-export enum MigrationType {
-  CREATE_TABLE = 'create-table',
-  ALTER_TABLE = 'alter-table',
-  OTHER = 'other'
-}
-
 /**
    * Generates a new file basename for the next migration module.
    *
@@ -15,11 +9,7 @@ export enum MigrationType {
    * @param tableName The table being migrated
    * @param migrationDir The migration directory
    */
-export function generateMigrationBasename (migrationType: MigrationType, tableName: string = '', { migrationDir = 'migrations' } = {}) {
-  if (!MigrationType[migrationType]) {
-    throw Object.assign(new Error('Migration type invalid.'), { code: 'EINVALIDMIGRATIONTYPE' })
-  }
-
+export function generateMigrationBasename (migrationType: string, tableName: string = '', { migrationDir = 'migrations' } = {}) {
   const timecode = formatDate(new Date(), 'YYYY-MM-DD')
   return getMigrationsCount(migrationDir, { prefix: timecode }).then(count => {
     const countPadded = zeroPad(count + 1, 3)
