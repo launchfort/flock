@@ -1,5 +1,5 @@
 export interface Answers {
-    migrationType?: 'create-table' | 'alter-table' | 'other';
+    migrationType?: string;
     tableName?: string;
     migrationName?: string;
 }

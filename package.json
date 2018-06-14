@@ -11,8 +11,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "mocha -r dotenv/config -r ts-node/register -r tsconfig-paths/register --exit \"./src/**/*.test.ts\"",
-    "build": "tsc -p .",
+    "test": "make test",
+    "build": "make build",
     "prepublish": "npm run build"
   },
   "keywords": [],
