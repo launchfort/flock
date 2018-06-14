@@ -13,7 +13,7 @@ export interface DataAccessProvider {
 }
 
 export interface DataAccess {
-  getMigratedMigrations (): Promise<{ id: string, createdAt: Date }[]>
+  getMigratedMigrations (): Promise<{ id: string, migratedAt: Date }[]>
   migrate (migrationId: string, action: (queryInterface: QueryInterface) => Promise<void>): Promise<void>
   rollback (migrationId: string, action: (queryInterface: QueryInterface) => Promise<void>): Promise<void>
   close (): Promise<void>
@@ -37,6 +37,24 @@ export class Migrator {
   constructor (migrationProvider: MigrationProvider, dataAccessProvider: DataAccessProvider) {
     this.getMigrations = () => migrationProvider.provide()
     this.getDataAccess = () => dataAccessProvider.provide()
+  }
+
+  async getMigrationState () {
+    // Get migrations on disk
+    const migrations = await this.getMigrations()
+    // Get all migrations that have a record in the DB (i.e. have been migrated)
+    const dataAccess = await this.getDataAccess()
+    const migratedMigrations = await dataAccess.getMigratedMigrations()
+
+    // Map over all migrations and return a state object for each
+    return migrations.map(x => {
+      const m = migratedMigrations.find(y => y.id === x.id)
+      return {
+        id: x.id,
+        migrated: !!m,
+        migratedAt: m ? m.migratedAt : null
+      }
+    })
   }
 
   async migrate (migrationId: string = null): Promise<void> {
@@ -69,11 +87,11 @@ export class Migrator {
   async rollback (migrationId: string = null): Promise<void> {
     const dataAccess = await this.getDataAccess()
     let migrated = await dataAccess.getMigratedMigrations()
-    let migrations = await this.getMigrations()
+    let migrations = []
 
-    // Ensure the migrated results are sorted by createdAt in ascending order.
+    // Ensure the migrated results are sorted by migratedAt in ascending order.
     migrated = migrated.sort((a, b) => {
-      return a.createdAt.getTime() - b.createdAt.getTime()
+      return a.migratedAt.getTime() - b.migratedAt.getTime()
     })
 
     if (migrationId === null) {
@@ -89,6 +107,7 @@ export class Migrator {
         }
       }
     } else if (migrationId !== '@all') {
+      migrations = await this.getMigrations()
       const m = migrations.find(x => x.id === migrationId)
       if (m) {
         migrations = [ m ]
@@ -112,8 +131,8 @@ export class Migrator {
 }
 
 // // flockrc.js
-// const { Migrator, NodeModuleMigrationProvider } = require('flock')
-// const { DataAccessProvider } = require('flock-pg')
+// const { Migrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
+// const { DataAccessProvider } = require('@gradealabs/flock-pg')
 //
 // const migrationDir = 'migrations'
 // const migrationTableName = 'migration'

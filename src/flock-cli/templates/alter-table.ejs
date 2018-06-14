@@ -1,0 +1,19 @@
+exports.up = function (context) {
+  const { client } = context
+  const sql =
+  `ALTER TABLE IF EXISTS "<%= tableName %>"
+  <COMMANDS>
+  `
+  const query = { sql }
+  return client.query(query)
+}
+
+exports.down = function (context) {
+  const { client } = context
+  const sql =
+  `ALTER TABLE IF EXISTS "<%= tableName %>"
+  <COMMANDS>
+  `
+  const query = { sql }
+  return client.query(query)
+}

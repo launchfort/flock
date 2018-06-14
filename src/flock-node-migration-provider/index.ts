@@ -1,6 +1,6 @@
 import { readdir } from 'fs'
 import * as path from 'path'
-import { MigrationProvider, Migration, QueryInterface } from './index'
+import { MigrationProvider, Migration, QueryInterface } from '../index'
 
 export class NodeModuleMigrationProvider implements MigrationProvider {
   dir: string

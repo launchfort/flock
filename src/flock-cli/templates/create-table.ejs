@@ -1,0 +1,20 @@
+exports.up = function (context) {
+  const { client } = context
+  const sql =
+  `CREATE TABLE IF NOT EXISTS "<%= tableName %>" (
+    id SERIAL,
+    created_at timestamp with time zone DEFAULT current_timestamp,
+    modified_at timestamp with time zone,
+    PRIMARY KEY (id)
+  )`
+  const query = { sql }
+  return client.query(query)
+}
+
+exports.down = function (context) {
+  const { client } = context
+  const sql =
+  `DROP TABLE IF EXISTS "<%= tableName %>"`
+  const query = { sql }
+  return client.query(query)
+}

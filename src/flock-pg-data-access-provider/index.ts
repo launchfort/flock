@@ -1,5 +1,5 @@
 import { Client } from 'pg'
-import { DataAccessProvider, DataAccess, QueryInterface, QueryResult } from './index'
+import { DataAccessProvider, DataAccess, QueryInterface, QueryResult } from '../index'
 
 export class PgDataAccessProvider implements DataAccessProvider {
   readonly migrationTableName: string
@@ -47,7 +47,7 @@ export class PgDataAccess implements DataAccess {
       text: `SELECT id, created_at FROM "${this.migrationTableName}"`
     })
     return (result.rows || []).map(x => {
-      return { id: x.id, createdAt: x.created_at }
+      return { id: x.id, migratedAt: x.created_at }
     })
   }
 
