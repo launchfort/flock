@@ -1,19 +1,29 @@
 import * as FileSystem from 'fs'
 import * as Path from 'path'
-import * as Ejs from 'ejs'
+import { TemplateProvider } from '../../template-provider'
+import { DefaultTemplateRenderer } from './template-renderer'
 import { mkdirp } from './mkdirp'
 import { prompt, Answers } from './prompt'
 
 interface Options extends Answers {
   migrationDir: string
+  templateProvider: TemplateProvider
 }
 
-export async function create ({ migrationDir, migrationType, migrationName, tableName }: Options) {
-  const answers = await prompt({ migrationDir, answers: { migrationType, migrationName, tableName } })
+const renderer = new DefaultTemplateRenderer()
+
+export async function create ({ migrationDir, templateProvider, migrationType, migrationName, tableName }: Options) {
+  const promptOptions = {
+    migrationDir,
+    migrationTypes: templateProvider.migrationTypes.slice(),
+    answers: { migrationType, migrationName, tableName }
+  }
+  const answers = await prompt(promptOptions)
   ;({ migrationType, migrationName, tableName } = answers)
-  const templateFileName = getTemplateFileName(migrationType)
+
+  const templateFileName = await templateProvider.provideFileName(migrationType)
   const outFileName = `${migrationDir}/${migrationName}`
-  const str = await renderTemplate(templateFileName, { tableName })
+  const str = await renderer.render(templateFileName, { tableName })
 
   await mkdirp(Path.dirname(outFileName))
 
@@ -22,21 +32,4 @@ export async function create ({ migrationDir, migrationType, migrationName, tabl
       error ? reject(error) : resolve()
     })
   })
-}
-
-function renderTemplate (templateFileName, context = {}) {
-  return new Promise((resolve, reject) => {
-    Ejs.renderFile(templateFileName, context, (error, str) => {
-      error ? reject(error) : resolve(str)
-    })
-  })
-}
-
-function getTemplateFileName (migrationType: string) {
-  const fileName = Path.join(__dirname, '../../templates', migrationType + '.ejs')
-  if (FileSystem.existsSync(fileName)) {
-    return fileName
-  } else {
-    throw new Error(`Template not found [${fileName}]`)
-  }
 }

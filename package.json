@@ -2,7 +2,8 @@
   "name": "@gradealabs/flock",
   "version": "3.0.0",
   "description": "Flock is a database agnostic migration library.",
-  "main": "lib/flock/index.js",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "bin": {
     "flock": "bin/flock"
   },
@@ -10,26 +11,26 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "mocha -r dotenv/config lib/**/*.test.js lib/**/**/*.test.js lib/**/**/**/*.test.js",
-    "test:": "mocha -r dotenv/config"
+    "test": "mocha -r dotenv/config -r ts-node/register --exit \"./src/**/*.test.ts\"",
+    "build": "tsc -p .",
+    "prepublish": "npm run build"
   },
   "keywords": [],
-  "author": "Darren Schnare <schnare.d@gmail.com>",
+  "author": "Darren Schnare <dschnare.d@gradealabs.com>",
   "license": "MIT",
   "devDependencies": {
-    "dotenv": "^5.0.1",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0-beta.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "mocha": "^5.0.0"
+    "@types/mocha": "^5.2.2",
+    "@types/node": "^10.3.3",
+    "@types/pg": "^7.4.9",
+    "dotenv": "6.0.0",
+    "mocha": "5.2.0",
+    "ts-node": "6.1.1",
+    "typescript": "2.9.2"
   },
   "dependencies": {
-    "commander": "2.15.0",
-    "ejs": "2.5.9",
-    "inquirer": "5.2.0",
-    "pg": "7.4.1"
+    "commander": "^2.15.1",
+    "ejs": "^2.6.1",
+    "inquirer": "^6.0.0",
+    "pg": "^7.4.3"
   }
 }

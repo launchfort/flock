@@ -8,21 +8,29 @@ export interface Answers {
 }
 
 export interface Options {
+  migrationTypes: string[]
   migrationDir: string
   answers?: Answers
 }
 
-export async function prompt ({ migrationDir, answers = {} }: Options) {
+export async function prompt ({ migrationDir, migrationTypes, answers = {} }: Options) {
   const questions = [
     {
       type: 'list',
       name: 'migrationType',
       message: 'Choose the type of migration',
-      choices: [
-        { name: 'Create table', value: 'create-table' },
-        { name: 'Alter table', value: 'alter-table' },
-        { name: 'Other', value: 'other' }
-      ]
+      when: migrationTypes.length > 0,
+      default: () => migrationTypes.length > 0 ? '' : 'default',
+      choices: migrationTypes.map(x => {
+        return {
+          // Make name proper case; words separted with '-' are uppercased
+          name: x.split('-')
+            .filter(Boolean)
+            .map(x => x[0].toUpperCase() + x.substr(1))
+            .join(' '),
+          value: x
+        }
+      })
     },
     {
       type: 'input',

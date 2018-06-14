@@ -1,7 +1,20 @@
+import * as Path from 'path'
 import { Client } from 'pg'
-import { DataAccessProvider, DataAccess, QueryInterface, QueryResult } from '../index'
+import * as Flock from '../index'
 
-export class PgDataAccessProvider implements DataAccessProvider {
+export class TemplateProvider implements Flock.TemplateProvider {
+  readonly migrationTypes = [ 'create-table', 'alter-table', 'other' ]
+
+  provideFileName (migrationType: string) {
+    if (this.migrationTypes.indexOf(migrationType) >= 0) {
+      return Promise.resolve(Path.join(__dirname, 'templates', migrationType + '.ejs'))
+    } else {
+      return Promise.reject(new Error(`Unsupported migration type [${migrationType}]`))
+    }
+  }
+}
+
+export class DataAccessProvider implements Flock.DataAccessProvider {
   readonly migrationTableName: string
   readonly acquireLock: boolean
 
@@ -29,7 +42,7 @@ export class PgDataAccessProvider implements DataAccessProvider {
   }
 }
 
-export class PgDataAccess implements DataAccess {
+export class PgDataAccess implements Flock.DataAccess {
   private client: any
   private qi: PgQueryInterface
   readonly migrationTableName: string
@@ -123,14 +136,14 @@ export class PgDataAccess implements DataAccess {
   }
 }
 
-export class PgQueryInterface implements QueryInterface {
-  client: { query(queryObject: { text: string, values?: any[], name?: string }): Promise<QueryResult> }
+export class PgQueryInterface implements Flock.QueryInterface {
+  client: { query(queryObject: { text: string, values?: any[], name?: string }): Promise<Flock.QueryResult> }
 
   constructor (client) {
     this.client = client
   }
 
-  query (queryObject: { text: string, values?: any[], name?: string }): Promise<QueryResult> {
+  query (queryObject: { text: string, values?: any[], name?: string }): Promise<Flock.QueryResult> {
     return this.client.query(queryObject)
   }
 

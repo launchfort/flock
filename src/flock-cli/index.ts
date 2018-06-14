@@ -1,6 +1,10 @@
 import * as Path from 'path'
 import { Command } from 'commander'
+import * as Flock from '../index'
 import * as Actions from './actions'
+import { TemplateProvider, DefaultTemplateProvider } from './template-provider'
+
+export { TemplateProvider }
 
 export function run (args) {
   const cmd = init()
@@ -12,8 +16,16 @@ export function run (args) {
   }
 }
 
-function requireRc (fileName = 'flockrc') {
-  return require(Path.resolve(fileName))
+interface Rc {
+  migrator: Flock.Migrator
+  migrationDir: string
+  templateProvider?: TemplateProvider
+}
+
+function requireRc (fileName = 'flockrc'): Rc {
+  let rc: Rc = require(Path.resolve(fileName))
+  rc.templateProvider = rc.templateProvider || new DefaultTemplateProvider()
+  return rc
 }
 
 function init () {
@@ -29,8 +41,8 @@ function init () {
     .option('--rc', 'The rc file to load (default flockrc.js)')
     .action((cmd) => {
       if (cmd.require) require(cmd.require)
-      const { migrationDir } = requireRc(cmd.rc)
-      const opts = { migrationDir }
+      const { migrationDir, templateProvider } = requireRc(cmd.rc)
+      const opts = { migrationDir, templateProvider }
       Actions.create(opts).catch(error => {
         console.error(error)
         process.exit(1)
@@ -62,7 +74,7 @@ function init () {
     .description('Rollback the last ran migration, all migrations, or down to a specific migration')
     .option('-l, --list', 'Display list of migrations to pick from')
     .option('-r, --require <moduleId>', 'Module ID of a module to require before rolling back')
-    .option('-c, --config', 'The config file to load (default .flockrc.json)')
+    .option('--rc', 'The rc file to load (default flockrc.js)')
     .usage('rollback [migrationId | @all]')
     .action((migrationId, cmd) => {
       if (cmd.require) require(cmd.require)
@@ -80,10 +92,11 @@ function init () {
 
   cmd
     .command('upgrade')
-    .description('Upgrade a flock project using a .yo-rc.json file to use a .flockrc.json file')
-    .option('-c, --config', 'The config file to write to (default .flockrc.json)')
+    .description('Upgrade a flock project using a .yo-rc.json or .flockrc.json file to use a flockrc.js file')
+    .option('-c, --config', 'The flock 2.x config file to read from (default .flockrc.json)')
+    .option('--rc', 'The rc file to write to (default flockrc.js)')
     .action((cmd) => {
-      actions.upgrade({ cfgFileName: cmd.config }).catch(error => {
+      Actions.upgrade({ cfgFileName: cmd.config, rcFileName: cmd.rc }).catch(error => {
         console.error(error)
         process.exit(1)
       })

@@ -1,3 +1,6 @@
+export { NodeModuleMigrationProvider } from './node-migration-provider'
+export { TemplateProvider } from './flock-cli'
+
 export interface MigrationProvider {
   provide (): Promise<Migration[]>
 }
@@ -23,6 +26,7 @@ export interface QueryInterface {
   query (queryObject: any): Promise<QueryResult>
   tableExists (tableName: string): Promise<boolean>
   columnExists (tableName: string, columnName: string): Promise<boolean>
+  columnDataType (tableName: string, columnName: string): Promise<string|null>
 }
 
 export interface QueryResult {
@@ -45,6 +49,7 @@ export class Migrator {
     // Get all migrations that have a record in the DB (i.e. have been migrated)
     const dataAccess = await this.getDataAccess()
     const migratedMigrations = await dataAccess.getMigratedMigrations()
+    await dataAccess.close()
 
     // Map over all migrations and return a state object for each
     return migrations.map(x => {
@@ -129,16 +134,3 @@ export class Migrator {
     })
   }
 }
-
-// // flockrc.js
-// const { Migrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
-// const { DataAccessProvider } = require('@gradealabs/flock-pg')
-//
-// const migrationDir = 'migrations'
-// const migrationTableName = 'migration'
-// const acquireLock = true
-// const dap = new DataAccessProvider({ migrationTableName, acquireLock })
-// const mp = new NodeModuleMigrationProvider({ migrationDir })
-//
-// exports.migrator = new Migrator(mp, dap)
-// exports.migrationDir = migrationDir

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const cli = require('../lib/cli')
+const FlockCli = require('../lib/flock-cli')
 
-cli(process.argv)
+FlockCli.run(process.argv)
