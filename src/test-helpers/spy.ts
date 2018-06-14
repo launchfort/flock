@@ -3,7 +3,7 @@ export type Spy = {
   calls: { args: any[], returnValue: any }[]
 }
 
-export function spy (fn: (...args: any[]) => any) {
+export function spy (fn: (...args: any[]) => any = () => {}) {
   let calls = []
   let f = <Spy>((...args: any[]) => {
     const returnValue = fn(...args)

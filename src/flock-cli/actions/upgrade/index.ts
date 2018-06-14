@@ -33,7 +33,7 @@ export function upgrade ({ yoRcFileName = '.yo-rc.json', cfgFileName = '.flockrc
 
 function writeRc ({ migrationDir, migrationTable, fileName }: { migrationDir: string, migrationTable: string, fileName: string }) {
   const text =
-`const { Migrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
+`const { DefaultMigrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
 const { DataAccessProvider, TemplateProvider } = require('@gradealabs/flock-pg')
 
 const migrationDir = '${migrationDir}'
@@ -41,7 +41,7 @@ const migrationTableName = '${migrationTable}'
 const dap = new DataAccessProvider({ migrationTableName })
 const mp = new NodeModuleMigrationProvider({ migrationDir })
 
-exports.migrator = new Migrator(mp, dap)
+exports.migrator = new DefaultMigrator(mp, dap)
 exports.migrationDir = migrationDir
 exports.templateProvider = new TemplateProvider()
 
