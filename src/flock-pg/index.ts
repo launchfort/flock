@@ -17,16 +17,18 @@ export class TemplateProvider implements Flock.TemplateProvider {
 export class DataAccessProvider implements Flock.DataAccessProvider {
   readonly migrationTableName: string
   readonly acquireLock: boolean
+  readonly connectionString: string
 
-  constructor ({ migrationTableName = 'migration', acquireLock = true } = {}) {
+  constructor ({ migrationTableName = 'migration', acquireLock = true, connectionString = process.env.DATABASE_URL } = {}) {
     this.migrationTableName = migrationTableName
     this.acquireLock = acquireLock
+    this.connectionString = connectionString
   }
 
   async provide () {
     const lock = 5432
     let locked = false
-    const client = new Client()
+    const client = new Client({ connectionString: this.connectionString })
 
     if (this.acquireLock) {
       const advisoryLockResult = await client.query(`SELECT pg_try_advisory_lock(${lock})`)
