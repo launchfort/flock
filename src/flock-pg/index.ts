@@ -43,7 +43,7 @@ export class DataAccessProvider implements Flock.DataAccessProvider {
 }
 
 export class PgDataAccess implements Flock.DataAccess {
-  private client: any
+  private client: Client
   private qi: PgQueryInterface
   readonly migrationTableName: string
   readonly lock: number
@@ -64,7 +64,7 @@ export class PgDataAccess implements Flock.DataAccess {
     })
   }
 
-  async migrate (migrationId, action) {
+  async migrate (migrationId: string, action: (qi: Flock.QueryInterface) => Promise<void>) {
     const hasMigrated = await this.hasMigrated(migrationId)
 
     if (hasMigrated) {
@@ -93,7 +93,7 @@ export class PgDataAccess implements Flock.DataAccess {
     }
   }
 
-  async rollback (migrationId, action) {
+  async rollback (migrationId: string, action: (qi: Flock.QueryInterface) => Promise<void>) {
     const migrationTableExists = await this.qi.tableExists(this.migrationTableName)
 
     if (!migrationTableExists) {
