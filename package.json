@@ -11,7 +11,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "mocha -r dotenv/config -r ts-node/register --exit \"./src/**/*.test.ts\"",
+    "test": "mocha -r dotenv/config -r ts-node/register -r tsconfig-paths/register --exit \"./src/**/*.test.ts\"",
     "build": "tsc -p .",
     "prepublish": "npm run build"
   },
@@ -25,6 +25,7 @@
     "dotenv": "6.0.0",
     "mocha": "5.2.0",
     "ts-node": "6.1.1",
+    "tsconfig-paths": "^3.4.0",
     "typescript": "2.9.2"
   },
   "dependencies": {
