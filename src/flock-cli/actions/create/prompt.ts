@@ -35,13 +35,9 @@ export async function prompt ({ migrationDir, migrationTypes, answers = {} }: Op
     {
       type: 'input',
       name: 'tableName',
-      message: a => {
-        return a.migrationType === 'other'
-          ? 'What table is being migrated (optional)?'
-          : 'What table is being migrated?'
-      },
-      validate: (table, a) => {
-        if (a.migrationType !== 'other' && !table) {
+      message: 'What table is being migrated?',
+      validate: (tableName, a) => {
+        if (!tableName) {
           throw new Error('Please specify the table being migrated')
         } else {
           return true
