@@ -3,7 +3,7 @@ import * as Path from 'path'
 import * as TestHelpers from 'test-helpers'
 import { getMigrationsCount } from './get-migrations-count'
 
-describe('generate-migration-basename', function () {
+describe('generate-migration-basename/get-migrations-count', function () {
   let dir = ''
 
   before(async function () {

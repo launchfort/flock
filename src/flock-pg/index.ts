@@ -139,7 +139,7 @@ export class PgDataAccess implements Flock.DataAccess {
 export class PgQueryInterface implements Flock.QueryInterface {
   client: { query(queryObject: { text: string, values?: any[], name?: string }): Promise<Flock.QueryResult> }
 
-  constructor (client) {
+  constructor (client: Client) {
     this.client = client
   }
 
