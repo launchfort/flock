@@ -22,7 +22,7 @@ interface Rc {
   templateProvider?: TemplateProvider
 }
 
-function requireRc (fileName = 'flockrc'): Rc {
+function requireRc (fileName = 'flockrc.js'): Rc {
   let rc: Rc = require(Path.resolve(fileName))
   rc.templateProvider = rc.templateProvider || new DefaultTemplateProvider()
   return rc
