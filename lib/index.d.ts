@@ -1,3 +1,5 @@
+/// <reference types="node" />
+import { EventEmitter } from 'events';
 export { NodeModuleMigrationProvider } from './node-migration-provider';
 export { TemplateProvider } from 'flock-cli';
 export interface MigrationProvider {
@@ -32,15 +34,36 @@ export interface QueryResult {
         [col: string]: any;
     }[];
 }
-export declare class Migrator {
+export interface Migrator {
+    getMigrationState(): Promise<MigrationState[]>;
+    migrate(migrationId?: string): Promise<void>;
+    rollback(migrationId?: string): Promise<void>;
+    addListener(event: string | symbol, listener: (...args: any[]) => void): this;
+    on(event: string | symbol, listener: (...args: any[]) => void): this;
+    once(event: string | symbol, listener: (...args: any[]) => void): this;
+    prependListener(event: string | symbol, listener: (...args: any[]) => void): this;
+    prependOnceListener(event: string | symbol, listener: (...args: any[]) => void): this;
+    removeListener(event: string | symbol, listener: (...args: any[]) => void): this;
+    off(event: string | symbol, listener: (...args: any[]) => void): this;
+    removeAllListeners(event?: string | symbol): this;
+    setMaxListeners(n: number): this;
+    getMaxListeners(): number;
+    listeners(event: string | symbol): Function[];
+    rawListeners(event: string | symbol): Function[];
+    emit(event: string | symbol, ...args: any[]): boolean;
+    eventNames(): Array<string | symbol>;
+    listenerCount(type: string | symbol): number;
+}
+export interface MigrationState {
+    id: string;
+    migrated: boolean;
+    migratedAt?: Date;
+}
+export declare class DefaultMigrator extends EventEmitter implements Migrator {
     getMigrations: () => Promise<Migration[]>;
     getDataAccess: () => Promise<DataAccess>;
     constructor(migrationProvider: MigrationProvider, dataAccessProvider: DataAccessProvider);
-    getMigrationState(): Promise<{
-        id: string;
-        migrated: boolean;
-        migratedAt: Date;
-    }[]>;
+    getMigrationState(): Promise<MigrationState[]>;
     migrate(migrationId?: string): Promise<void>;
     rollback(migrationId?: string): Promise<void>;
 }

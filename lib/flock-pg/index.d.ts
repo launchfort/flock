@@ -1,3 +1,4 @@
+import { Client } from 'pg';
 import * as Flock from 'flock';
 export declare class TemplateProvider implements Flock.TemplateProvider {
     readonly migrationTypes: string[];
@@ -6,9 +7,11 @@ export declare class TemplateProvider implements Flock.TemplateProvider {
 export declare class DataAccessProvider implements Flock.DataAccessProvider {
     readonly migrationTableName: string;
     readonly acquireLock: boolean;
-    constructor({ migrationTableName, acquireLock }?: {
+    readonly connectionString: string;
+    constructor({ migrationTableName, acquireLock, connectionString }?: {
         migrationTableName?: string;
         acquireLock?: boolean;
+        connectionString?: string;
     });
     provide(): Promise<PgDataAccess>;
 }
@@ -37,7 +40,7 @@ export declare class PgQueryInterface implements Flock.QueryInterface {
             name?: string;
         }): Promise<Flock.QueryResult>;
     };
-    constructor(client: any);
+    constructor(client: Client);
     query(queryObject: {
         text: string;
         values?: any[];

@@ -5,4 +5,4 @@ export declare type Spy = {
         returnValue: any;
     }[];
 };
-export declare function spy(fn: (...args: any[]) => any): Spy;
+export declare function spy(fn?: (...args: any[]) => any): Spy;

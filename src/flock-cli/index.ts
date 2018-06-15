@@ -30,7 +30,7 @@ function requireRc (fileName = 'flockrc.js'): Rc {
 
 function init () {
   let cmd = new Command()
-  const pkg = require('../package.json')
+  const pkg = require('../../package.json')
 
   cmd.version(pkg.version, '-v, --version')
 
