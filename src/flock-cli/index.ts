@@ -19,7 +19,7 @@ export function run (args) {
 interface Rc {
   migrator: Flock.Migrator
   migrationDir: string
-  templateProvider?: TemplateProvider
+  templateProvider: TemplateProvider
 }
 
 function requireRc (fileName = 'flockrc.js'): Rc {

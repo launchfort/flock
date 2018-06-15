@@ -1,4 +1,4 @@
-import * as assert from 'assert'
+import * as Assert from 'assert'
 import * as Path from 'path'
 import * as TestHelpers from 'test-helpers'
 import { generateMigrationBasename } from './index'
@@ -20,11 +20,11 @@ describe('generate-migration-basename', function () {
 
   it('should generate a new migration basename', async function () {
     const basename = await generateMigrationBasename('create-model', 'user', { migrationDir: dir, date: new Date(2018, 0, 1) })
-    assert.strictEqual(basename, '2018-01-01--001--create-model--user.js')
+    Assert.strictEqual(basename, '2018-01-01--001--create-model--user.js')
   })
 
   it('should generate a migration basename that is next in a sequence', async function () {
     const basename = await generateMigrationBasename('create-model', 'user', { migrationDir: dir, date: new Date(2018, 0, 2) })
-    assert.strictEqual(basename, '2018-01-02--003--create-model--user.js')
+    Assert.strictEqual(basename, '2018-01-02--003--create-model--user.js')
   })
 })

@@ -1,4 +1,4 @@
-import * as assert from 'assert'
+import * as Assert from 'assert'
 import * as Path from 'path'
 import * as FileSystem from 'fs'
 import * as TestHelpers from 'test-helpers'
@@ -29,6 +29,6 @@ describe('flock-cli/actions/create', function () {
       migrationName: 'create-something.js'
     })
 
-    assert.ok(FileSystem.existsSync(Path.join(dir, 'create-something.js')), 'Migration file was not created')
+    Assert.ok(FileSystem.existsSync(Path.join(dir, 'create-something.js')), 'Migration file was not created')
   })
 })

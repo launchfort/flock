@@ -124,7 +124,7 @@ export class DefaultMigrator extends EventEmitter implements Migrator {
   async rollback (migrationId: string = null): Promise<void> {
     const dataAccess = await this.getDataAccess()
     let migrated = await dataAccess.getMigratedMigrations()
-    let migrations = []
+    let migrations = await this.getMigrations()
 
     // Ensure the migrated results are sorted by migratedAt in ascending order.
     migrated = migrated.sort((a, b) => {
@@ -140,16 +140,15 @@ export class DefaultMigrator extends EventEmitter implements Migrator {
         if (m) {
           migrations = [ m ]
         } else {
-          throw new Error(`The last migrated migration ${lastMigrated.id} cannot be found`)
+          throw new Error(`The last migrated migration [${lastMigrated.id}] cannot be found`)
         }
       }
     } else if (migrationId !== '@all') {
-      migrations = await this.getMigrations()
       const m = migrations.find(x => x.id === migrationId)
       if (m) {
         migrations = [ m ]
       } else {
-        throw new Error(`Migration ${migrationId} not found`)
+        throw new Error(`Migration [${migrationId}] not found`)
       }
     }
 

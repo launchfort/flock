@@ -1,4 +1,4 @@
-import * as assert from 'assert'
+import * as Assert from 'assert'
 import * as Path from 'path'
 import * as TestHelpers from 'test-helpers'
 import { getMigrationsCount } from './get-migrations-count'
@@ -23,11 +23,11 @@ describe('generate-migration-basename/get-migrations-count', function () {
 
   it('should count the number of migration files', async function () {
     const count = await getMigrationsCount(dir)
-    assert.strictEqual(count, 5)
+    Assert.strictEqual(count, 5)
   })
 
   it('should count the number of migration files with a prefix', async function () {
     const count = await getMigrationsCount(dir, { prefix: 'two-' })
-    assert.strictEqual(count, 3)
+    Assert.strictEqual(count, 3)
   })
 })
