@@ -30,7 +30,7 @@ export declare class PgDataAccess implements Flock.DataAccess {
     migrate(migrationId: string, action: (qi: Flock.QueryInterface) => Promise<void>): Promise<void>;
     rollback(migrationId: string, action: (qi: Flock.QueryInterface) => Promise<void>): Promise<void>;
     close(): Promise<void>;
-    hasMigrated(migrationId: string): Promise<boolean>;
+    private hasMigrated;
 }
 export declare class PgQueryInterface implements Flock.QueryInterface {
     client: {
@@ -49,7 +49,5 @@ export declare class PgQueryInterface implements Flock.QueryInterface {
     tableExists(tableName: string): Promise<boolean>;
     columnExists(tableName: string, columnName: string): Promise<boolean>;
     columnDataType(tableName: string, columnName: string): Promise<string | null>;
-    inspectColumn(tableName: string, columnName: string): Promise<{
-        [col: string]: any;
-    }>;
+    private inspectColumn;
 }
