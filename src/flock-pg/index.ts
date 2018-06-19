@@ -129,7 +129,7 @@ export class PgDataAccess implements Flock.DataAccess {
     return this.client.end()
   }
 
-  async hasMigrated (migrationId: string) {
+  private async hasMigrated (migrationId: string) {
     const result = await this.qi.query({
       text: `SELECT id FROM "${this.migrationTableName}" WHERE id = $1`,
       values: [ migrationId ]
@@ -185,7 +185,7 @@ export class PgQueryInterface implements Flock.QueryInterface {
     })
   }
 
-  async inspectColumn (tableName: string, columnName: string) {
+  private async inspectColumn (tableName: string, columnName: string) {
     // ANSI SQL compliant query. This should work for all RDMS.
     // NOTE: use schema_name() for MSSQL
     const result = await this.query({
