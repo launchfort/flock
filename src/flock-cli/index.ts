@@ -103,6 +103,21 @@ function init () {
     })
 
   cmd
+    .command('list')
+    .description('Display list of migrations')
+    .option('--rc', 'The rc file to write to (default flockrc.js)')
+    .action((cmd) => {
+      const { migrator } = requireRc(cmd.rc)
+      const opts = {
+        migrator
+      }
+      Actions.list(opts).catch(error => {
+        console.error(error)
+        process.exit(1)
+      })
+    })
+
+  cmd
     .command('*')
     .action(() => cmd.help())
 
