@@ -5,12 +5,6 @@
     "moduleResolution": "node",
     "outDir": "lib",
     "declaration": true,
-    "baseUrl": "src",
-    "paths": {
-      "flock": [
-        "index"
-      ]
-    },
     "lib": [
       "es2015"
     ]

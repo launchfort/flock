@@ -1,4 +1,4 @@
-import * as Flock from 'flock';
+import * as Flock from '../../../index';
 import { Answers } from './prompt';
 interface Options extends Answers {
     showList: boolean;

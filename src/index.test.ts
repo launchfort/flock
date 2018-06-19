@@ -1,5 +1,5 @@
 import * as Assert from 'assert'
-import * as TestHelpers from 'test-helpers'
+import * as TestHelpers from './test-helpers'
 import {
   DefaultMigrator,
   DataAccess,

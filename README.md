@@ -23,7 +23,7 @@ npm install gradealabs/flock -D
 ## Command line usage
 
 ```
-Usage: flock [options] [command]
+Usage:  [options] [command]
 
 Options:
 
@@ -35,7 +35,8 @@ Commands:
   create [options]                  Create a database migration
   migrate [options] [migrationId]   Run all migrations, or up to a specific migration
   rollback [options] [migrationId]  Rollback the last ran migration, all migrations, or down to a specific migration
-  upgrade [options]                 Upgrade a flock project using a .yo-rc.json file to use a .flockrc.json file
+  upgrade [options]                 Upgrade a flock project using a .yo-rc.json or .flockrc.json file to use a flockrc.js file
+  list [options]                    Display list of migrations
 ```
 
 ### create
@@ -53,8 +54,9 @@ Create a database migration
 
 Options:
 
-  -c, --config  The config file to load (default .flockrc.json)
-  -h, --help    output usage information
+  -r, --require <moduleId>  Module ID of a module to require before creating a migration
+  --rc                      The rc file to load (default flockrc.js)
+  -h, --help                output usage information
 ```
 
 ### migrate
@@ -70,10 +72,10 @@ Run all migrations, or up to a specific migration
 
 Options:
 
-  -r, --require   Module ID of a module to require before migrating
-  -l, --list      Display list of migrations to pick from
-  -c, --config    The config file to load (default .flockrc.json)
-  -h, --help      output usage information
+  -l, --list                Display list of migrations to pick from
+  -r, --require <moduleId>  Module ID of a module to require before migrating
+  --rc                      The rc file to load (default flockrc.js)
+  -h, --help                output usage information
 ```
 
 When using the `--list` option, migration IDs are listed with `✓` to indicte they
@@ -104,10 +106,10 @@ Rollback the last ran migration, all migrations, or down to a specific migration
 
 Options:
 
-  -r, --require   Module ID of a module to require before rolling back
-  -l, --list      Display list of migrations to pick from
-  -c, --config    The config file to load (default .flockrc.json)
-  -h, --help      output usage information
+  -l, --list                Display list of migrations to pick from
+  -r, --require <moduleId>  Module ID of a module to require before rolling back
+  --rc                      The rc file to load (default flockrc.js)
+  -h, --help                output usage information
 ```
 
 When using the `--list` option, migration IDs are listed with `✓` to indicte they
@@ -129,79 +131,37 @@ If the migration ID is `@all` then all migtations will be rolled back.
 
 ### upgrade
 
-The `upgrade` command will take a project that is using flock 1.x up to the
-latest config file format for flock 2+.
+The `upgrade` command will take a project that is using a previous version of
+flock and attempt to upgrade the config file to a config file that is compatible
+with the version of flock installed.
 
 ```
 Usage: upgrade [options]
 
-Upgrade a flock project using a .yo-rc.json file to use a .flockrc.json file
+Upgrade the flock project config file
 
 Options:
 
-  -c, --config              The config file to write to (default .flockrc.json)
-  -h, --help                output usage information
+  -c, --config  The flock 2.x config file to read from (default .flockrc.json)
+  --rc          The rc file to write to (default flockrc.js)
+  -h, --help    output usage information
 ```
 
-## Testing
+### list
 
-To test the plugins first run `docker-compose up` from the module directory.
-Then run `npm test`.
+List all migrations and whether have been run or not.
+
+```
+Usage: list [options]
+
+Display list of migrations
+
+Options:
+
+  --rc        The rc file to write to (default flockrc.js)
+  -h, --help  output usage information
+```
 
 ## API
 
 *Coming Soon*
-
-## Drivers
-
-Flock can be extended to support other databases through the use of plugins. The
-following plugins are supported by default.
-
-- flock-pg
-
-*NOTE: This driver may not always be installed by default in the future.*
-
-### flock-pg
-
-The `flock-pg` driver adds support for connecting to Postgres databases. Every
-migration will have the following context passed to its `up` and `down` functions.
-
-```
-{
-  // The name of the migrations table
-  migrationTable: string,
-  // The Client instance (pg module)
-  client: pg.Client,
-  tableExists(tableName: string): Promise<boolean>,
-  columnExists(tableName: string, columnName: string): Promise<boolean>,
-  columnDataType(tableName: string, columnName: string): Promise<string | null>,
-  // Retrieves a row from `information_schema.columns`
-  inspectColumn(tableName: string, columnName: string): Promise<{}>
-}
-```
-
-Any method that accepts `tableName` as an argument will only search tables that
-the current user has access to and has been created in the current schema.
-
-*NOTE: The current/default schema can be changed with `SET search_path = new_schema`.*
-
-**Connecting**
-
-To set the connection details for the database use the following environment
-variables.
-
-```
-DATABASE_URL
-```
-
-OR
-
-```
-PGUSER
-PGPASSWORD
-PGHOST
-PGPORT
-PGDATABASE
-```
-
-See: https://node-postgres.com/features/connecting

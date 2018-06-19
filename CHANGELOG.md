@@ -1,3 +1,20 @@
+# 3.0.0
+
+**Major**
+
+- Completely re-written in TypeScript with a better architected pluggable API.
+- The config file `.flockrc.json` has been replaced with an rc JavaScript module
+  with the file name `flockrc.js` by default.
+- Configuration has changed so that all setup and initialization occurs in the
+  rc file.
+- Postgres support is not included in this module anymore. You will need to
+  install `gradealabs/flock-pg`.
+
+**Minor**
+
+- Add the `list` command line action that will list all migrations and whether
+  they have been migrated `✓` or not `✗`.
+
 # 2.0.0
 
 **What's New**

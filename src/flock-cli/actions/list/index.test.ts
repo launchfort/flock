@@ -1,5 +1,5 @@
 import * as Assert from 'assert'
-import * as TestHelpers from 'test-helpers'
+import * as TestHelpers from '../../../test-helpers'
 import { list } from './index'
 
 describe('flock-cli/actions/list', function () {

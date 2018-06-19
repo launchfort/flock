@@ -1,7 +1,7 @@
 import * as Assert from 'assert'
 import * as Path from 'path'
 import * as FileSystem from 'fs'
-import * as TestHelpers from 'test-helpers'
+import * as TestHelpers from '../../../test-helpers'
 import { create } from './index'
 
 describe('flock-cli/actions/create', function () {

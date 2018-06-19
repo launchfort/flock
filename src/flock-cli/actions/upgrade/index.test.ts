@@ -2,7 +2,7 @@ import * as Assert from 'assert'
 import * as Path from 'path'
 import * as FileSystem from 'fs'
 import { promisify } from 'util'
-import * as TestHelpers from 'test-helpers'
+import * as TestHelpers from '../../../test-helpers'
 import { upgrade } from './index'
 
 const writeFile = promisify(FileSystem.writeFile)

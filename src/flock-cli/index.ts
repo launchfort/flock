@@ -1,6 +1,6 @@
 import * as Path from 'path'
 import { Command } from 'commander'
-import * as Flock from 'flock'
+import * as Flock from '../index'
 import * as Actions from './actions'
 import { TemplateProvider, DefaultTemplateProvider } from './template-provider'
 
@@ -37,7 +37,7 @@ function init () {
   cmd
     .command('create')
     .description('Create a database migration')
-    .option('-r, --require <moduleId>', 'Module ID of a module to require before migrating')
+    .option('-r, --require <moduleId>', 'Module ID of a module to require before creating a migration')
     .option('--rc', 'The rc file to load (default flockrc.js)')
     .action((cmd) => {
       if (cmd.require) require(cmd.require)
@@ -92,7 +92,7 @@ function init () {
 
   cmd
     .command('upgrade')
-    .description('Upgrade a flock project using a .yo-rc.json or .flockrc.json file to use a flockrc.js file')
+    .description('Upgrade the flock project config file')
     .option('-c, --config', 'The flock 2.x config file to read from (default .flockrc.json)')
     .option('--rc', 'The rc file to write to (default flockrc.js)')
     .action((cmd) => {

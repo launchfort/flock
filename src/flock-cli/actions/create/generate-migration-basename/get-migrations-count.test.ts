@@ -1,6 +1,6 @@
 import * as Assert from 'assert'
 import * as Path from 'path'
-import * as TestHelpers from 'test-helpers'
+import * as TestHelpers from '../../../../test-helpers'
 import { getMigrationsCount } from './get-migrations-count'
 
 describe('generate-migration-basename/get-migrations-count', function () {

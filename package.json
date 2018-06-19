@@ -13,7 +13,8 @@
   "scripts": {
     "test": "make test",
     "build": "make build",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "clean": "make clean"
   },
   "keywords": [],
   "author": "Darren Schnare <dschnare.d@gradealabs.com>",

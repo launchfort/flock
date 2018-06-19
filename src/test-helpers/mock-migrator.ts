@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events'
-import { MigrationState, Migrator } from 'flock'
+import { MigrationState, Migrator } from '../index'
 import { spy } from './spy'
 
 export class MockMigrator extends EventEmitter implements Migrator {

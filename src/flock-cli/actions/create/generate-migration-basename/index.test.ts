@@ -1,6 +1,6 @@
 import * as Assert from 'assert'
 import * as Path from 'path'
-import * as TestHelpers from 'test-helpers'
+import * as TestHelpers from '../../../../test-helpers'
 import { generateMigrationBasename } from './index'
 
 describe('generate-migration-basename', function () {
