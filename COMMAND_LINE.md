@@ -5,7 +5,7 @@ The flock command line tool.
 ## Configuration
 
 The command line tool is configured using an rc Nodejs module that has the task
-rc configuring an instance of a flock `Migrator` and exposing the following
+of configuring an instance of a flock `Migrator` and exposing the following
 
 ```
 exports.migrationDir = /* the path to the migrations directory where migrations will be saved */
