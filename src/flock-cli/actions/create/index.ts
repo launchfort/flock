@@ -13,9 +13,12 @@ interface Options extends Answers {
 const renderer = new DefaultTemplateRenderer()
 
 export async function create ({ migrationDir, templateProvider, migrationType, migrationName, tableName }: Options) {
+  const migrationTypes = Array.isArray(templateProvider.migrationTypes)
+    ? templateProvider.migrationTypes.slice()
+    : []
   const promptOptions = {
     migrationDir,
-    migrationTypes: templateProvider.migrationTypes.slice(),
+    migrationTypes,
     answers: { migrationType, migrationName, tableName }
   }
   const answers = await prompt(promptOptions)

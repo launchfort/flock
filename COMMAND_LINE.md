@@ -22,8 +22,13 @@ interface TemplateProvider {
 }
 ```
 
-Here's an example rc Nodejs module that uses the `flock-pg` to save migration
-state in Postgres.
+Typically a `TemplateProvider` implementation will be exported by flock database
+plugins, since the format of the migration files may have a slightly unique
+format. If no `TemplateProvider` instance is exported as part of the rc module
+then a default one will be used instead.
+
+Here's an example rc Nodejs module that uses the `flock-pg` plugin to save
+migration state in Postgres.
 
 ```js
 const { DefaultMigrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
