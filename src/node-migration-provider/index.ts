@@ -15,7 +15,10 @@ export class NodeModuleMigrationProvider implements MigrationProvider {
         error ? reject(error) : resolve(files)
       })
     }).then((files: string[]) => {
-      return files.map(x => new NodeModuleMigration(path.join(this.dir, x)))
+      return files
+        // Sort files alphabetically
+        .sort(((a, b) => a.localeCompare(b)))
+        .map(x => new NodeModuleMigration(path.join(this.dir, x)))
     })
   }
 }
