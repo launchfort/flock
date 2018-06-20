@@ -183,6 +183,28 @@ class NodeModuleMigrationProvider implements MigrationProvider {
 }
 ```
 
+The `NodeModuleMigrationProvider` class will provide migrations sorted
+alphabetically instead of the order given by the file system, and the module ID
+will be the basename with no extension from the module file name.
+
+Example:
+```js
+// If migrations/ contains the modules `a`, `b` and `c`
+const mp = new NodeModuleMigrationProvider('migrations')
+const migrations = await mp.provide() // [ {id:'a', ...}, {id:'b', ...}, {id:'c', ...} ]
+```
+
+### Full Programmitic Example
+
+```js
+const { DefaultMigrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
+const { DataAccessProvider } = require('flock-some-plugin')
+
+const dap = new DataAccessProvider({ migrationTableName: 'migration' })
+const mp = new NodeModuleMigrationProvider({ migrationDir: 'migrations' })
+const migrator = new DefaultMigrator(mp, dap)
+```
+
 ## Command Line
 
 Read the [docs]('./COMMAND_LINE.md).

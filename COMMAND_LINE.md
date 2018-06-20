@@ -9,7 +9,7 @@ of configuring an instance of a flock `Migrator` and exposing the following
 
 ```
 exports.migrationDir = /* the path to the migrations directory where migrations will be saved */
-exports.migrator = /* instance of Migrator */
+exports.migrator = /* an instance of a flock Migrator */
 exports.templateProvider = /* an optional object that provides EJS template file names */
 ```
 
