@@ -6,18 +6,16 @@ Where a migration is a Node module that exports the following functions.
 
 ```
 {
-  up (context): Promise<void>,
-  down (context): Promise<void>
+  up (queryInterface): Promise<void>,
+  down (queryInterface): Promise<void>
 }
 ```
 
-The command line tool will write project settings to a `.flockrc.json` file
-after running any command. Be sure to check this into source control.
-
-## Install
+## Install and Initialization
 
 ```
-npm install gradealabs/flock -D
+npm install gradealabs/flock
+./node_modules/.bin/flock init
 ```
 
 ## Command line usage
@@ -32,11 +30,47 @@ Options:
 
 Commands:
 
+  init [options]                    Create the flock project rc file
+  upgrade [options]                 Upgrade a flock project
   create [options]                  Create a database migration
   migrate [options] [migrationId]   Run all migrations, or up to a specific migration
   rollback [options] [migrationId]  Rollback the last ran migration, all migrations, or down to a specific migration
-  upgrade [options]                 Upgrade a flock project using a .yo-rc.json or .flockrc.json file to use a flockrc.js file
   list [options]                    Display list of migrations
+```
+
+### init
+
+Initializes a flock project by creating the rc file. The rc file that is created
+will assume the app writes migrations to Postgres. You will need to sub out
+the `flock-pg` for the appropriate flock plugin for your needs.
+
+```
+Usage: init [options]
+
+Create the flock project rc file
+
+Options:
+
+  --rc        The rc file to write to (default flockrc.js)
+  -h, --help  output usage information
+```
+
+### upgrade
+
+The `upgrade` command will take a project that is using a previous version of
+flock and attempt to upgrade the config file to a config file that is compatible
+with the version of flock installed.
+
+```
+Usage: upgrade [options]
+
+Upgrade the flock project
+
+Options:
+
+  -c, --config  The flock 2.x config file to read from (default .flockrc.json)
+  --rc          The rc file to write to (default flockrc.js)
+  -h, --help    output usage information
 ```
 
 ### create
@@ -129,24 +163,6 @@ rolled back. Migrations occurring before `some-migration` will not be rolled bac
 
 If the migration ID is `@all` then all migtations will be rolled back.
 
-### upgrade
-
-The `upgrade` command will take a project that is using a previous version of
-flock and attempt to upgrade the config file to a config file that is compatible
-with the version of flock installed.
-
-```
-Usage: upgrade [options]
-
-Upgrade the flock project config file
-
-Options:
-
-  -c, --config  The flock 2.x config file to read from (default .flockrc.json)
-  --rc          The rc file to write to (default flockrc.js)
-  -h, --help    output usage information
-```
-
 ### list
 
 List all migrations and whether have been run or not.
@@ -164,4 +180,3 @@ Options:
 
 ## API
 
-*Coming Soon*

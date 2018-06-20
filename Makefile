@@ -3,7 +3,6 @@ test:
 	@./node_modules/.bin/mocha \
 		-r dotenv/config \
 		-r ts-node/register \
-		-r tsconfig-paths/register \
 		--exit \
 		./src/**/*.test.ts
 

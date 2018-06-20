@@ -1,6 +1,7 @@
 import * as FileSystem from 'fs'
 import * as Path from 'path'
 import { promisify } from 'util'
+import { writeRc } from '../write-rc'
 
 const unlink = promisify(FileSystem.unlink)
 
@@ -24,6 +25,7 @@ export async function upgrade ({ yoRcFileName = '.yo-rc.json', cfgFileName = '.f
       await unlink(yoRcFileName)
     // Upgrade from 0.x to 3.x (assume project was using flock in the early form)
     } else {
+      // Version 0.x had migrationTable set to 'migrations'
       migrationDir = 'migrations'
       migrationTable = 'migrations'
     }
@@ -35,27 +37,3 @@ export async function upgrade ({ yoRcFileName = '.yo-rc.json', cfgFileName = '.f
     fileName: rcFileName
   })
 }
-
-function writeRc ({ migrationDir, migrationTable, fileName }: { migrationDir: string, migrationTable: string, fileName: string }) {
-  const text =
-`const { DefaultMigrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
-const { DataAccessProvider, TemplateProvider } = require('@gradealabs/flock-pg')
-
-const migrationDir = '${migrationDir}'
-const migrationTableName = '${migrationTable}'
-const dap = new DataAccessProvider({ migrationTableName })
-const mp = new NodeModuleMigrationProvider({ migrationDir })
-
-exports.migrator = new DefaultMigrator(mp, dap)
-exports.migrationDir = migrationDir
-exports.templateProvider = new TemplateProvider()
-
-`
-
-  return new Promise<void>((resolve, reject) => {
-    FileSystem.writeFile(fileName, text, { encoding: 'utf8' }, error => {
-      error ? reject(error) : resolve()
-    })
-  })
-}
-

@@ -3,3 +3,4 @@ export { migrate } from './migrate';
 export { rollback } from './rollback';
 export { upgrade } from './upgrade';
 export { list } from './list';
+export { init } from './init';

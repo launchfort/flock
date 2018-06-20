@@ -35,6 +35,29 @@ function init () {
   cmd.version(pkg.version, '-v, --version')
 
   cmd
+    .command('init')
+    .description('Create the flock project rc file')
+    .option('--rc', 'The rc file to write to (default flockrc.js)')
+    .action((cmd) => {
+      Actions.init({ rcFileName: cmd.rc }).catch(error => {
+        console.error(error)
+        process.exit(1)
+      })
+    })
+
+  cmd
+    .command('upgrade')
+    .description('Upgrade a flock project')
+    .option('-c, --config', 'The flock 2.x config file to read from (default .flockrc.json)')
+    .option('--rc', 'The rc file to write to (default flockrc.js)')
+    .action((cmd) => {
+      Actions.upgrade({ cfgFileName: cmd.config, rcFileName: cmd.rc }).catch(error => {
+        console.error(error)
+        process.exit(1)
+      })
+    })
+
+  cmd
     .command('create')
     .description('Create a database migration')
     .option('-r, --require <moduleId>', 'Module ID of a module to require before creating a migration')
@@ -85,18 +108,6 @@ function init () {
         migrator
       }
       Actions.rollback(opts).catch(error => {
-        console.error(error)
-        process.exit(1)
-      })
-    })
-
-  cmd
-    .command('upgrade')
-    .description('Upgrade the flock project config file')
-    .option('-c, --config', 'The flock 2.x config file to read from (default .flockrc.json)')
-    .option('--rc', 'The rc file to write to (default flockrc.js)')
-    .action((cmd) => {
-      Actions.upgrade({ cfgFileName: cmd.config, rcFileName: cmd.rc }).catch(error => {
         console.error(error)
         process.exit(1)
       })
