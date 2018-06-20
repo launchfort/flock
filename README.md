@@ -20,7 +20,7 @@ npm install gradealabs/flock
 
 ## Writing a Migration
 
-A migration is by default a Nodejs module that exports an `up` and `down`
+A migration is typically a Nodejs module that exports an `up` and `down`
 functions that accept a `QueryInterface` instance and return a `Promise`.
 
 Where `QueryInterface` is the following
