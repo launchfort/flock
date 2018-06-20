@@ -207,4 +207,4 @@ const migrator = new DefaultMigrator(mp, dap)
 
 ## Command Line
 
-Read the [docs]('./COMMAND_LINE.md).
+Read the [docs](./COMMAND_LINE.md).
