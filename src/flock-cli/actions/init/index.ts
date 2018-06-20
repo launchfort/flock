@@ -1,7 +1,7 @@
 import * as FileSystem from 'fs'
 import { writeRc } from '../write-rc'
 
-export async function init ({ rcFileName = 'flockrc.js' } = {}) {
+export async function init ({ rcFileName = '.flockrc.js' } = {}) {
   let migrationDir = 'migrations'
   let migrationTable = 'migration'
 

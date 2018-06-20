@@ -5,7 +5,7 @@ import { writeRc } from '../write-rc'
 
 const unlink = promisify(FileSystem.unlink)
 
-export async function upgrade ({ yoRcFileName = '.yo-rc.json', cfgFileName = '.flockrc.json', rcFileName = 'flockrc.js' } = {}) {
+export async function upgrade ({ yoRcFileName = '.yo-rc.json', cfgFileName = '.flockrc.json', rcFileName = '.flockrc.js' } = {}) {
   let migrationDir = ''
   let migrationTable = ''
 

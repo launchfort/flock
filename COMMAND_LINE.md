@@ -77,7 +77,7 @@ Create the flock project rc file
 
 Options:
 
-  --rc        The rc file to write to (default flockrc.js)
+  --rc        The rc file to write to (default .flockrc.js)
   -h, --help  output usage information
 ```
 
@@ -95,7 +95,7 @@ Upgrade the flock project
 Options:
 
   -c, --config  The flock 2.x config file to read from (default .flockrc.json)
-  --rc          The rc file to write to (default flockrc.js)
+  --rc          The rc file to write to (default .flockrc.js)
   -h, --help    output usage information
 ```
 
@@ -115,7 +115,7 @@ Create a database migration
 Options:
 
   -r, --require <moduleId>  Module ID of a module to require before creating a migration
-  --rc                      The rc file to load (default flockrc.js)
+  --rc                      The rc file to load (default .flockrc.js)
   -h, --help                output usage information
 ```
 
@@ -134,7 +134,7 @@ Options:
 
   -l, --list                Display list of migrations to pick from
   -r, --require <moduleId>  Module ID of a module to require before migrating
-  --rc                      The rc file to load (default flockrc.js)
+  --rc                      The rc file to load (default .flockrc.js)
   -h, --help                output usage information
 ```
 
@@ -168,7 +168,7 @@ Options:
 
   -l, --list                Display list of migrations to pick from
   -r, --require <moduleId>  Module ID of a module to require before rolling back
-  --rc                      The rc file to load (default flockrc.js)
+  --rc                      The rc file to load (default .flockrc.js)
   -h, --help                output usage information
 ```
 
@@ -200,6 +200,6 @@ Display list of migrations
 
 Options:
 
-  --rc        The rc file to write to (default flockrc.js)
+  --rc        The rc file to write to (default .flockrc.js)
   -h, --help  output usage information
 ```

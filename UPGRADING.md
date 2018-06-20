@@ -6,7 +6,7 @@ file that is compatible with the version of flock you have installed.
 If previously using flock@2 be sure to pass `--config` if you have used a custom
 config file name.
 
-When upgrading the following `flockrc.js` file will be created with the
+When upgrading the following `.flockrc.js` file will be created with the
 `migrationDir` and `migrationTable` being read from you existing config file.
 
 ```js
