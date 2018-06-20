@@ -12,6 +12,8 @@
 
 **Minor**
 
+- Add the `init` command line action that will initialize a flock project by
+  creating the rc file for you.
 - Add the `list` command line action that will list all migrations and whether
   they have been migrated `✓` or not `✗`.
 
