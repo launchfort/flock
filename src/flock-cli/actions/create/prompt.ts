@@ -20,7 +20,7 @@ export async function prompt ({ migrationDir, migrationTypes, answers = {} }: Op
       name: 'migrationType',
       message: 'Choose the type of migration',
       when: migrationTypes.length > 0,
-      default: () => migrationTypes.length > 0 ? '' : 'default',
+      default: migrationTypes.length > 0 ? '' : 'default',
       choices: migrationTypes.map(x => {
         return {
           // Make name proper case; words separted with '-' are uppercased
