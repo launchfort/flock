@@ -36,7 +36,7 @@ that you'll be talking to a Postgres database and so the rc file depends on
 Each migration file will likely need to be tweaked a bit to use the `QueryInterface`
 being provided by whatever database plugin you're using.
 
-### Upgrading From 0.x or 1.x
+### Upgrading From 0.x or 1.x or 2.x
 
 All prior 3.x versions of Flock only supported a built-in Postgres plugin, and
 the `QueryInterface` provided by `flock-pg` has a similar API as what is
