@@ -30,3 +30,31 @@ that you'll be talking to a Postgres database and so the rc file depends on
 `@gradealabs/flock-pg`. Change this out for your own plugin as needed.
 
 *NOTE: @gradealabs/flock-pg is installed from GitHub using `npm install gradealabs/flock-pg`*
+
+## Upgrading Migration Files
+
+Each migration file will likely need to be tweaked a bit to use the `QueryInterface`
+being provided by whatever database plugin you're using.
+
+### Upgrading From 0.x or 1.x
+
+All prior 3.x versions of Flock only supported a built-in Postgres plugin, and
+the `QueryInterface` provided by `flock-pg` has a similar API as what is
+expected by your migration files in 0.x. So in short nothing *needs* to change,
+but you should think about refactoring your migrations from this:
+
+```js
+exports.up = function (context) {
+  const { client } = context
+  const query = `MY QUERY`
+  return client.query(query)
+}
+```
+
+To this:
+```js
+exports.up = function (queryInterface) {
+  const sql = `MY QUERY`
+  return queryInterface.query({ text: sql })
+}
+```
