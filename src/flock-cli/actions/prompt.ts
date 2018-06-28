@@ -12,6 +12,15 @@ export async function prompt<T> (questions: any[], { answers = {} }: { answers?:
   const bind = fn => a => fn(Object.assign({}, a, answers))
   const bind2 = fn => (input, a) => fn(input, Object.assign({}, a, answers))
 
+  // Strip out keys that are explicitly set to undefined. This can happen if
+  // arguments are set to the passed in answers object from the calling context
+  // and they have no value.
+  answers = Object.keys(answers).reduce((obj, key) => {
+    return answers[key] === undefined
+      ? obj
+      : Object.assign(obj, { [key]: answers[key] })
+  }, {})
+
   questions = questions.filter(x => {
     // Filter out questions that already have an answer provided.
     return answers[x.name] === undefined

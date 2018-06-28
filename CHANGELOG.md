@@ -1,3 +1,10 @@
+# 3.0.1
+
+**Minor**
+
+- Resolve issue with the create commandline action complaining about cannot
+  find template `undefined`.
+
 # 3.0.0
 
 **Major**
