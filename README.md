@@ -10,7 +10,7 @@ npm install gradealabs/flock
 ```
 
 *NOTE: If you are upgrading from a previous version of flock then don't run the
-`init` command and instead use the `upgrade` command. See [upgrading](./UPGRADING.md).
+`init` command and instead use the `upgrade` command. See [upgrading](./UPGRADING.md).*
 
 ## Writing a Migration
 
