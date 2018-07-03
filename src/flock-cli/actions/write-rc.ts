@@ -12,7 +12,7 @@ const { DataAccessProvider, TemplateProvider } = require('@gradealabs/flock-pg')
 const migrationDir = '${migrationDir}'
 const migrationTableName = '${migrationTable}'
 const dap = new DataAccessProvider({ migrationTableName })
-const mp = new NodeModuleMigrationProvider({ migrationDir })
+const mp = new NodeModuleMigrationProvider(migrationDir)
 
 exports.migrator = new DefaultMigrator(mp, dap)
 exports.migrationDir = migrationDir

@@ -1,6 +1,18 @@
+# 3.0.2
+
+**Patch**
+
+- Resolve issue with `init` and `upgrade` command line actions from creating
+  an incorrect `.flockrc.js` file where the `NodeModuleMigrationProvider`
+  instance was constructed incorrectly.
+- Update `README.md` to show proper `NodeModuleMigrationProvider` construction
+  examples.
+- Add a section to the `README.md` that describes how to upgrade and then points
+  to the `UPGRADING.md` document.
+
 # 3.0.1
 
-**Minor**
+**Patch**
 
 - Resolve issue with the create commandline action complaining about cannot
   find template `undefined`.

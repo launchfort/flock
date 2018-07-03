@@ -9,6 +9,9 @@ npm install gradealabs/flock
 ./node_modules/.bin/flock init
 ```
 
+*NOTE: If you are upgrading from a previous version of flock then don't run the
+`init` command and instead use the `upgrade` command. See [upgrading](./UPGRADING.md).
+
 ## Writing a Migration
 
 A migration is typically a Nodejs module that exports an `up` and `down`
@@ -201,7 +204,7 @@ const { DefaultMigrator, NodeModuleMigrationProvider } = require('@gradealabs/fl
 const { DataAccessProvider } = require('flock-some-plugin')
 
 const dap = new DataAccessProvider({ migrationTableName: 'migration' })
-const mp = new NodeModuleMigrationProvider({ migrationDir: 'migrations' })
+const mp = new NodeModuleMigrationProvider('migrations')
 const migrator = new DefaultMigrator(mp, dap)
 ```
 
