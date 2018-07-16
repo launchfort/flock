@@ -1,3 +1,12 @@
+# 3.0.3
+
+**Patch**
+
+- Add support to the `NodeModuleMigrationProvider` to ignore files and folders
+  that starts with `_`.
+- Add a nice error message to `NodeModuleMigrationProvider` when a migration
+  cannot be loaded, asking users to prefix with `_` to ignore.
+
 # 3.0.2
 
 **Patch**

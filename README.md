@@ -190,6 +190,8 @@ The `NodeModuleMigrationProvider` class will provide migrations sorted
 alphabetically instead of the order given by the file system, and the module ID
 will be the basename with no extension from the module file name.
 
+Any file or folder the starts with `_` will be ignored.
+
 Example:
 ```js
 // If migrations/ contains the modules `a`, `b` and `c`

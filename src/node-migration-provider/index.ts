@@ -16,6 +16,8 @@ export class NodeModuleMigrationProvider implements MigrationProvider {
       })
     }).then((files: string[]) => {
       return files
+        // Ignore modules that start with '_'
+        .filter(x => !x.startsWith('_'))
         // Sort files alphabetically
         .sort(((a, b) => a.localeCompare(b)))
         .map(x => new NodeModuleMigration(path.join(this.dir, x)))
@@ -28,7 +30,16 @@ export class NodeModuleMigration implements Migration {
   module: any
 
   constructor (fileName) {
-    this.module = require(path.resolve(fileName))
+    try {
+      this.module = require(path.resolve(fileName))
+    } catch (error) {
+      if (error.code === 'MODULE_NOT_FOUND') {
+        throw new Error(`Cannot load migration as a Node module [${fileName}]. Prefix with '_' to ignore.`)
+      } else {
+        throw error
+      }
+    }
+
     this.id = path.basename(fileName, path.extname(fileName))
 
     if (!this.module) {
