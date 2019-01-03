@@ -8,7 +8,7 @@
 
 **Patch**
 
-- Ensure timing is calcuated correctly when running `migrate` from CLI.
+- Ensure timing is calcuated correctly when running `migrate` and `rollback` from CLI.
 
 # 3.1.0
 
