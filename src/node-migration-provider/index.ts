@@ -22,9 +22,9 @@ export class NodeModuleMigrationProvider implements MigrationProvider {
       return files
         // Ignore modules that start with '_' or '.'
         .filter(x => !x.startsWith('_') && !x.startsWith('.'))
-        // Ignore mdouels that end with .db (i.e. thumbs.db)
+        // Ignore modules that end with .db (i.e. thumbs.db)
         .filter(x => !x.endsWith('.db'))
-        // Ignore mdouels that end with known mimetype extension
+        // Ignore modules that end with known mimetype extension
         .filter(x => /\.(?:jpg|jpeg|gif|png|pdf|docx|doc|xml|txt|css|csv|xlsx|md)$/i.test(x) === false)
         .filter(this.filter)
         // Sort files alphabetically
