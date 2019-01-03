@@ -1,6 +1,18 @@
-# 3.1.0
+# 3.2.0
+
+**Minor**
+
+- Add support for `seed` command line and `seed` Migrator method.
+- Update the RC generated from the `init` CLI command so that it shows an example
+  of calling the seed when the schema changes after migrating.
 
 **Patch**
+
+- Ensure timing is calcuated correctly when running `migrate` from CLI.
+
+# 3.1.0
+
+**Minor**
 
 - Add support to the `NodeModuleMigrationProvider` to ignore files and folders
   that starts with `.` and end with `jpg|jpeg|gif|png|pdf|docx|doc|xml|txt|css|csv|xlsx|md|db`.

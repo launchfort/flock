@@ -5,6 +5,9 @@ export declare class MockMigrator extends EventEmitter implements Migrator {
     migrationState: MigrationState[];
     constructor(migrationState?: MigrationState[]);
     getMigrationState(): Promise<MigrationState[]>;
-    migrate(migrationId?: string): Promise<void>;
+    migrate(migrationId?: string): Promise<{
+        schemaHasChanged: boolean;
+    }>;
+    seed(): Promise<void>;
     rollback(migrationId?: string): Promise<void>;
 }

@@ -3,8 +3,8 @@ test:
 	@./node_modules/.bin/mocha \
 		-r dotenv/config \
 		-r ts-node/register \
-		--exit \
-		./src/**/*.test.ts
+		./src/**/*.test.ts \
+		./src/**/**/*.test.ts
 
 .PHONY: build
 build:

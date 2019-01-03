@@ -1,3 +1,3 @@
-export declare function prompt<T>(questions: any[], { answers }?: {
+export declare function prompt<T extends {}>(questions: any[], { answers }?: {
     answers?: T;
 }): Promise<T>;
