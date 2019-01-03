@@ -16,8 +16,12 @@ export class NodeModuleMigrationProvider implements MigrationProvider {
       })
     }).then((files: string[]) => {
       return files
-        // Ignore modules that start with '_'
-        .filter(x => !x.startsWith('_'))
+        // Ignore modules that start with '_' or '.'
+        .filter(x => !x.startsWith('_') && !x.startsWith('.'))
+        // Ignore mdouels that end with .db (i.e. thumbs.db)
+        .filter(x => !x.endsWith('.db'))
+        // Ignore mdouels that end with known mimetype extension
+        .filter(x => /\.(?:jpg|jpeg|gif|png|pdf|docx|doc|xml|txt|css|csv|xlsx|md)$/i.test(x) === false)
         // Sort files alphabetically
         .sort(((a, b) => a.localeCompare(b)))
         .map(x => new NodeModuleMigration(path.join(this.dir, x)))
