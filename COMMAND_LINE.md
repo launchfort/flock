@@ -217,6 +217,6 @@ Display list of migrations
 
 Options:
 
-  --rc        The rc file to write to (default .flockrc.js)
+  --rc        The rc file to load (default .flockrc.js)
   -h, --help  output usage information
 ```
