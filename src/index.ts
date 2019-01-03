@@ -214,9 +214,8 @@ export class DefaultMigrator extends EventEmitter implements Migrator {
   }
 
   async seed (): Promise<void> {
-    const dataAccess = await this.getDataAccess()
-
     if (this.seeder) {
+      const dataAccess = await this.getDataAccess()
       const d = formatDate(new Date())
       const id = `${d}--seed`
       this.emit('seeding')
