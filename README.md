@@ -182,7 +182,7 @@ scan a directory for Nodejs modules that you can use when configuring the
 
 ```ts
 class NodeModuleMigrationProvider implements MigrationProvider {
-  constructor (dir = 'migrations')
+  constructor (dir = 'migrations', options?: { filter: (fileName: string) => boolean })
 }
 ```
 
@@ -190,7 +190,11 @@ The `NodeModuleMigrationProvider` class will provide migrations sorted
 alphabetically instead of the order given by the file system, and the module ID
 will be the basename with no extension from the module file name.
 
-Any file or folder the starts with `_` will be ignored.
+Any file or folder the starts with `_` or `.` will be ignored. Also common files
+will also be ignored: `jpg|jpeg|gif|png|pdf|docx|doc|xml|txt|css|csv|xlsx|md`.
+
+Optionally you can specify a custom filter that can be used to ignore other file
+names by specifying the `filter` option.
 
 Example:
 ```js
