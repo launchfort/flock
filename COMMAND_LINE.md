@@ -189,6 +189,23 @@ rolled back. Migrations occurring before `some-migration` will not be rolled bac
 
 If the migration ID is `@all` then all migtations will be rolled back.
 
+### seed
+
+The `seed` command will initialize the database with data if a seed is defined
+on the Migrator instance.
+
+```
+Usage: seed [options]
+
+Initialize database with data
+
+Options:
+
+  -r, --require <moduleId>  Module ID of a module to require before creating a migration
+  --rc                      The rc file to load (default .flockrc.js)
+  -h, --help                output usage information
+```
+
 ### list
 
 List all migrations and whether have been run or not.
@@ -200,6 +217,6 @@ Display list of migrations
 
 Options:
 
-  --rc        The rc file to write to (default .flockrc.js)
+  --rc        The rc file to load (default .flockrc.js)
   -h, --help  output usage information
 ```

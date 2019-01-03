@@ -1,7 +1,7 @@
 import * as Assert from 'assert'
 import { zeroPad } from './zero-pad'
 
-describe('generate-migration-basename/zero-pad', function () {
+describe('formatting/zero-pad', function () {
   it('should not zero pad numbers longer than the minimum digits', function () {
     Assert.strictEqual(zeroPad(10, Infinity), '10')
     Assert.strictEqual(zeroPad(10, -1), '10')

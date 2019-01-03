@@ -20,8 +20,8 @@ export async function rollback ({ showList, migrationId, migrator }: Options) {
   })
 
   const t = Date.now()
-  const time = ((Date.now() - t) / 1000).toFixed(3)
   await migrator.rollback(answers.migrationId)
   migrator.removeAllListeners()
+  const time = ((Date.now() - t) / 1000).toFixed(3)
   console.log(`Migrations successfully rolled back in ${time} seconds`)
 }

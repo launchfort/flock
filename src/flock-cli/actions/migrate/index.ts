@@ -20,8 +20,8 @@ export async function migrate ({ showList, migrationId, migrator }: Options) {
   })
 
   const t = Date.now()
-  const time = ((Date.now() - t) / 1000).toFixed(3)
   await migrator.migrate(answers.migrationId)
   migrator.removeAllListeners()
+  const time = ((Date.now() - t) / 1000).toFixed(3)
   console.log(`Migrations successfully completed in ${time} seconds`)
 }

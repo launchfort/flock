@@ -7,6 +7,10 @@ export interface MigrationProvider {
     /** Scans the file system or creates adhoc migrations. */
     provide(): Promise<Migration[]>;
 }
+/** The seed to initialize the database */
+export interface Seed {
+    run(queryInterface: QueryInterface): Promise<void>;
+}
 export interface Migration {
     id: string;
     up(queryInterface: QueryInterface): Promise<void>;
@@ -59,7 +63,9 @@ export interface Migrator {
      *
      * @param migrationId The migration to migrate down to
      */
-    migrate(migrationId?: string): Promise<void>;
+    migrate(migrationId?: string): Promise<{
+        schemaHasChanged: boolean;
+    }>;
     /**
      * Rolls back the last migrated migration. If a migration ID is specified then
      * rolls back only the migration. If migration ID is '@all' then rolls back
@@ -68,6 +74,10 @@ export interface Migrator {
      * @param migrationId The migration to rollback or '@all' to rollback all migrated migrations
      */
     rollback(migrationId?: string): Promise<void>;
+    /**
+     * Runs a seed that will initialize the database with data.
+     */
+    seed(): Promise<void>;
     /** EventEmitter API */
     addListener(event: string | symbol, listener: (...args: any[]) => void): this;
     on(event: string | symbol, listener: (...args: any[]) => void): this;
@@ -91,10 +101,14 @@ export interface MigrationState {
     migratedAt?: Date;
 }
 export declare class DefaultMigrator extends EventEmitter implements Migrator {
+    private seeder;
     getMigrations: () => Promise<Migration[]>;
     getDataAccess: () => Promise<DataAccess>;
-    constructor(migrationProvider: MigrationProvider, dataAccessProvider: DataAccessProvider);
+    constructor(migrationProvider: MigrationProvider, dataAccessProvider: DataAccessProvider, seed?: Seed);
     getMigrationState(): Promise<MigrationState[]>;
-    migrate(migrationId?: string): Promise<void>;
+    migrate(migrationId?: string): Promise<{
+        schemaHasChanged: boolean;
+    }>;
     rollback(migrationId?: string): Promise<void>;
+    seed(): Promise<void>;
 }

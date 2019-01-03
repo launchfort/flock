@@ -83,7 +83,7 @@ interface Migrator {
    *
    * @param migrationId The migration to migrate down to
    */
-  migrate (migrationId?: string): Promise<void>
+  migrate (migrationId?: string): Promise<{ schemaHasChanged: boolean }>
   /**
    * Rolls back the last migrated migration. If a migration ID is specified then
    * rolls back only the migration. If migration ID is '@all' then rolls back
@@ -92,6 +92,10 @@ interface Migrator {
    * @param migrationId The migration to rollback or '@all' to rollback all migrated migrations
    */
   rollback (migrationId?: string): Promise<void>
+  /**
+   * Runs a seed that will initialize the database with data.
+   */
+  seed (): Promise<void>
   /** EventEmitter API */
   addListener(event: string | symbol, listener: (...args: any[]) => void): this;
   on(event: string | symbol, listener: (...args: any[]) => void): this;
@@ -121,8 +125,13 @@ methods for running migrations. You don't have to implement this interface there
 is a default implementation `DefaultMigrator` class that flock exports for you.
 
 ```ts
+interface Seed {
+  // Where queryInterface is the same QueryInterface provided to migrations.
+  run (queryInterface: QueryInterface): Promise<void>
+}
+
 class DefaultMigrator extends EventEmitter implements Migrator
-  constructor (migrationProvider: MigrationProvider, dataAccessProvider: DataAccessProvider)
+  constructor (migrationProvider: MigrationProvider, dataAccessProvider: DataAccessProvider, seed?: Seed)
 }
 ```
 
@@ -206,12 +215,35 @@ const migrations = await mp.provide() // [ {id:'a', ...}, {id:'b', ...}, {id:'c'
 ### Full Programmitic Example
 
 ```js
-const { DefaultMigrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
+const { DefaultMigrator, NodeModuleMigrationProvider, QueryInterface } = require('@gradealabs/flock')
 const { DataAccessProvider } = require('flock-some-plugin')
+
+// Optionally we can run our seed automatically when there are schema changes.
+// class MyMigrator extends DefaultMigrator {
+//   async migrate (migrationId: string = null) {
+//     const { schemaHasChanged } = await super.migrate(migrationId)
+//     // When migrating all migrations and there are schema changes then we seed
+//     // automatically.
+//     if (migrationId === null && schemaHasChanged) {
+//       await this.seed()
+//     }
+
+//     return { schemaHasChanged }
+//   }
+// }
 
 const dap = new DataAccessProvider({ migrationTableName: 'migration' })
 const mp = new NodeModuleMigrationProvider('migrations')
-const migrator = new DefaultMigrator(mp, dap)
+const seed = null
+// Optionally specify your seed that initializes the database with data.
+// const seed = {
+//   run (q: QueryInterface) {
+//     // TODO: Seed the DB with data.
+//     return Promise.resolve()
+//   }
+// }
+// We can use our own MyMigrator if we want to run the seed on schema changes.
+const migrator = new DefaultMigrator(mp, dap, seed)
 ```
 
 ## Command Line

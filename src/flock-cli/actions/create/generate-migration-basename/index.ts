@@ -1,5 +1,4 @@
-import { formatDate } from './format-date'
-import { zeroPad } from './zero-pad'
+import { formatDate, zeroPad } from '../../../../formatting'
 import { getMigrationsCount } from './get-migrations-count'
 
 /**

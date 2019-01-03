@@ -218,4 +218,25 @@ describe('flock#DefaultMigrator', function () {
       Assert.strictEqual(da.close['calls'].length, 1)
     })
   })
+
+  describe('#seed', function () {
+    let da: MockDataAccess = null
+    let migrator: DefaultMigrator = null
+
+    beforeEach(function () {
+      da = new MockDataAccess()
+      const dap = new MockDataAccessProvider(da)
+      const mp = new MockMigrationProvider()
+      migrator = new DefaultMigrator(mp, dap, {
+        run () { return Promise.resolve() }
+      })
+    })
+
+    it('should run the seed', async function () {
+      await migrator.seed()
+      Assert.deepStrictEqual(da.migrate['calls'].length, 1)
+      Assert.deepStrictEqual(da.rollback['calls'].length, 1)
+      Assert.strictEqual(da.close['calls'].length, 1)
+    })
+  })
 })

@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events'
+import { formatDate } from './formatting'
 
 export { NodeModuleMigrationProvider } from './node-migration-provider'
 export { TemplateProvider } from './flock-cli'
@@ -7,6 +8,11 @@ export { TemplateProvider } from './flock-cli'
 export interface MigrationProvider {
   /** Scans the file system or creates adhoc migrations. */
   provide (): Promise<Migration[]>
+}
+
+/** The seed to initialize the database */
+export interface Seed {
+  run (queryInterface: QueryInterface): Promise<void>
 }
 
 export interface Migration {
@@ -61,7 +67,7 @@ export interface Migrator {
    *
    * @param migrationId The migration to migrate down to
    */
-  migrate (migrationId?: string): Promise<void>
+  migrate (migrationId?: string): Promise<{ schemaHasChanged: boolean }>
   /**
    * Rolls back the last migrated migration. If a migration ID is specified then
    * rolls back only the migration. If migration ID is '@all' then rolls back
@@ -70,6 +76,10 @@ export interface Migrator {
    * @param migrationId The migration to rollback or '@all' to rollback all migrated migrations
    */
   rollback (migrationId?: string): Promise<void>
+  /**
+   * Runs a seed that will initialize the database with data.
+   */
+  seed (): Promise<void>
   /** EventEmitter API */
   addListener(event: string | symbol, listener: (...args: any[]) => void): this;
   on(event: string | symbol, listener: (...args: any[]) => void): this;
@@ -95,11 +105,13 @@ export interface MigrationState {
 }
 
 export class DefaultMigrator extends EventEmitter implements Migrator {
+  private seeder: Seed = null
   getMigrations: () => Promise<Migration[]>
   getDataAccess: () => Promise<DataAccess>
 
-  constructor (migrationProvider: MigrationProvider, dataAccessProvider: DataAccessProvider) {
+  constructor (migrationProvider: MigrationProvider, dataAccessProvider: DataAccessProvider, seed?: Seed) {
     super()
+    this.seeder = seed
     this.getMigrations = () => migrationProvider.provide()
     this.getDataAccess = () => dataAccessProvider.provide()
   }
@@ -123,7 +135,7 @@ export class DefaultMigrator extends EventEmitter implements Migrator {
     })
   }
 
-  async migrate (migrationId: string = null): Promise<void> {
+  async migrate (migrationId: string = null): Promise<{ schemaHasChanged: boolean }> {
     const dataAccess = await this.getDataAccess()
     const migrated = await dataAccess.getMigratedMigrations()
     let migrations = await this.getMigrations()
@@ -138,6 +150,7 @@ export class DefaultMigrator extends EventEmitter implements Migrator {
     }
 
     migrations = migrations.filter(x => !migrated.some(y => y.id === x.id))
+    const schemaHasChanged = migrations.length > 0
 
     return migrations.reduce((p, m) => {
       return p.then(async () => {
@@ -146,7 +159,9 @@ export class DefaultMigrator extends EventEmitter implements Migrator {
         this.emit('migrate', { migrationId: m.id })
       })
     }, Promise.resolve()).then(() => {
-      return dataAccess.close()
+      return dataAccess.close().then(() => {
+        return { schemaHasChanged }
+      })
     }, error => {
       return dataAccess.close().then(() => Promise.reject(error))
     })
@@ -196,5 +211,29 @@ export class DefaultMigrator extends EventEmitter implements Migrator {
     }, error => {
       return dataAccess.close().then(() => Promise.reject(error))
     })
+  }
+
+  async seed (): Promise<void> {
+    if (this.seeder) {
+      const dataAccess = await this.getDataAccess()
+      const d = formatDate(new Date())
+      const id = `${d}--seed`
+      this.emit('seeding')
+
+      // Run the seed in a migration "context" so we get auto-rollbacks if the
+      // seed fails...
+      try {
+        await dataAccess.migrate(id, q => this.seeder.run(q))
+      } catch (error) {
+        await dataAccess.close()
+        return Promise.reject(error)
+      }
+
+      // ...then we rollback the seed right away so we remove the entry from the
+      // migration table.
+      dataAccess.rollback(id, q => Promise.resolve())
+      this.emit('seed')
+      await dataAccess.close()
+    }
   }
 }
