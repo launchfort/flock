@@ -4,9 +4,13 @@ import { MigrationProvider, Migration, QueryInterface } from '../index'
 
 export class NodeModuleMigrationProvider implements MigrationProvider {
   dir: string
+  // The custom filename filter
+  private filter: (fileName: string) => boolean
 
-  constructor (dir = 'migrations') {
+  constructor (dir = 'migrations', options?: { filter: (fileName: string) => boolean }) {
+    const { filter = (x: string) => true } = (options || {})
     this.dir = dir
+    this.filter = filter
   }
 
   provide (): Promise<Migration[]> {
@@ -22,6 +26,7 @@ export class NodeModuleMigrationProvider implements MigrationProvider {
         .filter(x => !x.endsWith('.db'))
         // Ignore mdouels that end with known mimetype extension
         .filter(x => /\.(?:jpg|jpeg|gif|png|pdf|docx|doc|xml|txt|css|csv|xlsx|md)$/i.test(x) === false)
+        .filter(this.filter)
         // Sort files alphabetically
         .sort(((a, b) => a.localeCompare(b)))
         .map(x => new NodeModuleMigration(path.join(this.dir, x)))
