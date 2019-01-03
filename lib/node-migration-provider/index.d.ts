@@ -1,7 +1,10 @@
 import { MigrationProvider, Migration, QueryInterface } from '../index';
 export declare class NodeModuleMigrationProvider implements MigrationProvider {
     dir: string;
-    constructor(dir?: string);
+    private filter;
+    constructor(dir?: string, options?: {
+        filter: (fileName: string) => boolean;
+    });
     provide(): Promise<Migration[]>;
 }
 export declare class NodeModuleMigration implements Migration {
