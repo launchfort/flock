@@ -1,3 +1,12 @@
+# 3.1.0
+
+**Patch**
+
+- Add support to the `NodeModuleMigrationProvider` to ignore files and folders
+  that starts with `.` and end with `jpg|jpeg|gif|png|pdf|docx|doc|xml|txt|css|csv|xlsx|md|db`.
+- Add `filter` option that `NodeModuleMigrationProvider` that allows for ignoring
+  custom files.
+
 # 3.0.3
 
 **Patch**
