@@ -231,7 +231,7 @@ export class DefaultMigrator extends EventEmitter implements Migrator {
 
       // ...then we rollback the seed right away so we remove the entry from the
       // migration table.
-      dataAccess.rollback(id, q => Promise.resolve())
+      await dataAccess.rollback(id, q => Promise.resolve())
       this.emit('seed')
       await dataAccess.close()
     }
