@@ -1,3 +1,9 @@
+# 3.2.1
+
+**Patch**
+
+- Add missing `await` keyword when calling `rollback` after a seed.
+
 # 3.2.0
 
 **Minor**
