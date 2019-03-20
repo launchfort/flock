@@ -10,8 +10,8 @@ When upgrading the following `.flockrc.js` file will be created with the
 `migrationDir` and `migrationTable` being read from you existing config file.
 
 ```js
-const { DefaultMigrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
-const { DataAccessProvider, TemplateProvider } = require('@gradealabs/flock-pg')
+const { DefaultMigrator, NodeModuleMigrationProvider } = require('@launchfort/flock')
+const { DataAccessProvider, TemplateProvider } = require('@launchfort/flock-pg')
 
 const migrationDir = '${migrationDir}'
 const migrationTableName = '${migrationTable}'
@@ -27,9 +27,9 @@ exports.templateProvider = new TemplateProvider()
 Once this file has been created you will need to install the correct flock
 plugin to communicate with your database of choice. By default it's assumed
 that you'll be talking to a Postgres database and so the rc file depends on
-`@gradealabs/flock-pg`. Change this out for your own plugin as needed.
+`@launchfort/flock-pg`. Change this out for your own plugin as needed.
 
-*NOTE: @gradealabs/flock-pg is installed from GitHub using `npm install gradealabs/flock-pg`*
+*NOTE: @launchfort/flock-pg is installed from GitHub using `npm install launchfort/flock-pg`*
 
 ## Upgrading Migration Files
 

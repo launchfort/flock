@@ -31,8 +31,8 @@ Here's an example rc Nodejs module that uses the `flock-pg` plugin to save
 migration state in Postgres.
 
 ```js
-const { DefaultMigrator, NodeModuleMigrationProvider } = require('@gradealabs/flock')
-const { DataAccessProvider, TemplateProvider } = require('@gradealabs/flock-pg')
+const { DefaultMigrator, NodeModuleMigrationProvider } = require('@launchfort/flock')
+const { DataAccessProvider, TemplateProvider } = require('@launchfort/flock-pg')
 
 const migrationDir = 'migrations'
 const migrationTableName = 'migration'

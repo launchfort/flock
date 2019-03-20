@@ -5,7 +5,7 @@ Flock is a database agnostic migration library and command line tool.
 ## Install and Initialization
 
 ```
-npm install gradealabs/flock
+npm install @launchfort/flock
 ./node_modules/.bin/flock init
 ```
 
@@ -215,7 +215,7 @@ const migrations = await mp.provide() // [ {id:'a', ...}, {id:'b', ...}, {id:'c'
 ### Full Programmitic Example
 
 ```js
-const { DefaultMigrator, NodeModuleMigrationProvider, QueryInterface } = require('@gradealabs/flock')
+const { DefaultMigrator, NodeModuleMigrationProvider, QueryInterface } = require('@launchfort/flock')
 const { DataAccessProvider } = require('flock-some-plugin')
 
 // Optionally we can run our seed automatically when there are schema changes.
