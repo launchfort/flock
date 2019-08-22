@@ -4,5 +4,5 @@ interface Options extends Answers {
     migrationDir: string;
     templateProvider: TemplateProvider;
 }
-export declare function create({ migrationDir, templateProvider, migrationType, migrationName, tableName }: Options): Promise<{}>;
+export declare function create({ migrationDir, templateProvider, migrationType, migrationName, tableName }: Options): Promise<unknown>;
 export {};

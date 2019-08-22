@@ -1,6 +1,6 @@
 {
   "name": "@launchfort/flock",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "Flock is a database agnostic migration library.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -20,18 +20,18 @@
   "author": "Darren Schnare <dschnare@launchfort.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/mocha": "5.2.6",
-    "@types/node": "11.11.4",
-    "@types/pg": "7.4.14",
-    "dotenv": "7.0.0",
-    "mocha": "6.0.2",
-    "ts-node": "8.0.3",
+    "@types/mocha": "5.2.7",
+    "@types/node": "12.7.2",
+    "@types/pg": "7.11.0",
+    "dotenv": "8.1.0",
+    "mocha": "6.2.0",
+    "ts-node": "8.3.0",
     "tsconfig-paths": "3.8.0",
-    "typescript": "3.3.4000"
+    "typescript": "3.5.3"
   },
   "dependencies": {
-    "commander": "2.19.0",
-    "ejs": "2.6.1",
-    "inquirer": "6.2.2"
+    "commander": "3.0.0",
+    "ejs": "2.6.2",
+    "inquirer": "6.5.1"
   }
 }

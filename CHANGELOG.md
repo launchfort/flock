@@ -1,6 +1,12 @@
+# 3.2.3
+
+**Patch**
+
+- Update dependencies
+
 # 3.2.2
 
-**Minor**
+**Patch**
 
 - Update dependencies
 - Change package scope to @launchfort from @gradealabs
