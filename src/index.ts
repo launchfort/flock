@@ -173,7 +173,7 @@ export class DefaultMigrator extends EventEmitter implements Migrator {
     let migrations = await this.getMigrations()
 
     // Ensure the migrated results are sorted by migratedAt in ascending order.
-    migrated = migrated.sort((a, b) => {
+    migrated.sort((a, b) => {
       return a.migratedAt.getTime() - b.migratedAt.getTime()
     })
 
