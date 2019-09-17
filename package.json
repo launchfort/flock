@@ -4,6 +4,9 @@
   "description": "Flock is a database agnostic migration library.",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "bin": {
     "flock": "bin/flock"
   },

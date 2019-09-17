@@ -37,7 +37,7 @@ function init () {
   cmd
     .command('init')
     .description('Create the flock project rc file')
-    .option('--rc', 'The rc file to write to (default .flockrc.js)')
+    .option('--rc <filePath>', 'The rc file to write to (default .flockrc.js)')
     .action((cmd) => {
       Actions.init({ rcFileName: cmd.rc }).catch(error => {
         console.error(error)
@@ -49,7 +49,7 @@ function init () {
     .command('upgrade')
     .description('Upgrade a flock project')
     .option('-c, --config', 'The flock 2.x config file to read from (default .flockrc.json)')
-    .option('--rc', 'The rc file to write to (default .flockrc.js)')
+    .option('--rc <filePath>', 'The rc file to write to (default .flockrc.js)')
     .action((cmd) => {
       Actions.upgrade({ cfgFileName: cmd.config, rcFileName: cmd.rc }).catch(error => {
         console.error(error)
@@ -61,7 +61,7 @@ function init () {
     .command('create')
     .description('Create a database migration')
     .option('-r, --require <moduleId>', 'Module ID of a module to require before creating a migration')
-    .option('--rc', 'The rc file to load (default .flockrc.js)')
+    .option('--rc <filePath>', 'The rc file to load (default .flockrc.js)')
     .action((cmd) => {
       if (cmd.require) require(cmd.require)
       const { migrationDir, templateProvider } = requireRc(cmd.rc)
@@ -77,7 +77,7 @@ function init () {
     .description('Run all migrations, or up to a specific migration')
     .option('-l, --list', 'Display list of migrations to pick from')
     .option('-r, --require <moduleId>', 'Module ID of a module to require before migrating')
-    .option('--rc', 'The rc file to load (default .flockrc.js)')
+    .option('--rc <filePath>', 'The rc file to load (default .flockrc.js)')
     .action((migrationId, cmd) => {
       if (cmd.require) require(cmd.require)
       const { migrator } = requireRc(cmd.rc)
@@ -97,7 +97,7 @@ function init () {
     .description('Rollback the last ran migration, all migrations, or down to a specific migration')
     .option('-l, --list', 'Display list of migrations to pick from')
     .option('-r, --require <moduleId>', 'Module ID of a module to require before rolling back')
-    .option('--rc', 'The rc file to load (default .flockrc.js)')
+    .option('--rc <filePath>', 'The rc file to load (default .flockrc.js)')
     .usage('rollback [migrationId | @all]')
     .action((migrationId, cmd) => {
       if (cmd.require) require(cmd.require)
@@ -117,7 +117,7 @@ function init () {
     .command('seed')
     .description('Initialize database with data')
     .option('-r, --require <moduleId>', 'Module ID of a module to require before migrating')
-    .option('--rc', 'The rc file to load (default .flockrc.js)')
+    .option('--rc <filePath>', 'The rc file to load (default .flockrc.js)')
     .action((cmd) => {
       if (cmd.require) require(cmd.require)
       const { migrator } = requireRc(cmd.rc)
@@ -133,7 +133,7 @@ function init () {
   cmd
     .command('list')
     .description('Display list of migrations')
-    .option('--rc', 'The rc file to load (default .flockrc.js)')
+    .option('--rc <filePath>', 'The rc file to load (default .flockrc.js)')
     .action((cmd) => {
       const { migrator } = requireRc(cmd.rc)
       const opts = {
