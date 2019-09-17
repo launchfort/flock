@@ -1,3 +1,9 @@
+# 3.2.4
+
+**Patch**
+
+- Fix `--rc` command line options so that it is treated as a string not a boolean flag
+
 # 3.2.3
 
 **Patch**
